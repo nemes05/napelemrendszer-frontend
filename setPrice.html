@@ -12,33 +12,24 @@
             <form action="" method="post">
                <tr>
                 <td>
-                    <label>Alkatrész neve:</label>
+                    <label>Válassza ki az alkatrészt:</label>
                 </td>
                 <td>
-                    <input type="text" id="partName" name="partName">
-                </td>
-               </tr>
-
-               <tr>
-                <td>
-                    <label>Ár:</label>
-                </td>
-                <td>
-                    <input type="text" id="partPrice" name="partPrice">
+                    <!--IDE KELL EGY LISTA AZ ADATBÁZISBAN LÉVŐ ALKATRÉSZEKKEL-->
                 </td>
                </tr>
 
                <tr>
                 <td>
-                    <label>Maximális darabszám:</label>
+                    <label>Új ár:</label>
                 </td>
                 <td>
-                    <input type="text" id="maxPieces" name="maxPieces">
+                    <input type="number" id="partnewPrice" name="partNewPrice">
                 </td>
                </tr>
                <tr style="text-align: center;">
                 <td colspan="2">
-                    <button class="partButton" type="submit" onlick="addNewPartScript()">Új alkatrész felvétele</button>
+                    <button class="partButton" type="submit" onlick="setNewPrice()">Ár módosítása</button>
                 </td>
                </tr>
             </form>
