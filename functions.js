@@ -1,10 +1,4 @@
 'use strict'
-function addNewPart(){
-    document.getElementById("form_for_data").innerHTML="<iframe src='newPart.html' title='Új alkatrész felvitele' width='100%' height='200px''></iframe>"
-}
-function setPrice(){
-    document.getElementById("form_for_data").innerHTML="<iframe src='setPrice.html' title='Ár módosítás' width='100%' height='200px''></iframe>"
-}
 function listMissingParts(){
     alert("Jelenleg ez a funkció még nem elérhető.")
 }
@@ -16,4 +10,16 @@ function addShippedPart(){
 }
 function boxManagement(){
     alert("Jelenleg ez a funkció még nem elérhető.")
+}
+
+function addNewPart(){
+    var iframe = document.getElementById('myFrame')
+    iframe.src="newPart.html"
+    iframe.hidden = false;
+}
+
+function setPrice(){
+    var iframe = document.getElementById('myFrame')
+    iframe.src="setPrice.html"
+    iframe.hidden = false;
 }
