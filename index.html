@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="login.js"></script>
     <title>Bejelentkezés</title>
 </head>
@@ -11,7 +12,7 @@
 <body>
     <div id="headerId"><h1 >Napelemrendszerek telepítését támogató rendszer</h1></div>
     <h2>Bejelentkezés</h2>
-    <form id="loginForm">
+    <form method="post" id="loginForm">
         <label for="username" style="text-align: left;">Felhasznalónév:</label><br>
         <input type="text" id="username" name="username"><br><br>
         <label for="password">Jelszó:</label><br>
