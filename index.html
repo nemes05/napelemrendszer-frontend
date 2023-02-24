@@ -2,7 +2,9 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+    <script src="login.js"></script>
     <title>Bejelentkezés</title>
 </head>
 
@@ -10,12 +12,12 @@
     <div id="headerId"><h1 >Napelemrendszerek telepítését támogató rendszer</h1></div>
     <h2>Bejelentkezés</h2>
     <form id="loginForm">
-        <label id="username" style="text-align: left;">Felhasznalónév:</label><br>
+        <label for="username" style="text-align: left;">Felhasznalónév:</label><br>
         <input type="text" id="username" name="username"><br><br>
-        <label id="password">Jelszó:</label><br>
+        <label for="password">Jelszó:</label><br>
         <input type="password" id="password" name="password"><br><br>
         <button id="loginButton" type="submit" onclick="login()">Bejelentkezés</button>
-      </form>
+    </form>
     
 </body>
 </html>
