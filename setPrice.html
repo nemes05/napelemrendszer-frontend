@@ -10,14 +10,23 @@
 <body>
     <table style="margin-top:5%;margin-left:38%; margin-right: 30%; border:1px solid">
         
-            <form>
+           
                <tr>
                 <td>
                     <label>Válassza ki az alkatrészt:</label>
+                    
                 </td>
                 <td>
+                    
                     <div id="parts"></div>
-                    <!--IDE KELL EGY LISTA AZ ADATBÁZISBAN LÉVŐ ALKATRÉSZEKKEL-->
+                </td>
+               </tr>
+               <tr>
+                <td>
+                    <label>Régi ár:</label>
+                </td>
+                <td>
+                    <div id="previousPrice"></div>
                 </td>
                </tr>
 
@@ -34,7 +43,7 @@
                     <button class="partButton" type="submit" onlick="setNewPrice()">Ár módosítása</button>
                 </td>
                </tr>
-            </form>
+            
 
        
     </table>
