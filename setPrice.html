@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Új alkatrész felvétele</title>
+</head>
+
+<body>
+    <table style="margin-top:5%;margin-left:38%; margin-right: 30%; border:1px solid">
+        
+            <form>
+               <tr>
+                <td>
+                    <label>Válassza ki az alkatrészt:</label>
+                </td>
+                <td>
+                    <div id="parts"></div>
+                    <!--IDE KELL EGY LISTA AZ ADATBÁZISBAN LÉVŐ ALKATRÉSZEKKEL-->
+                </td>
+               </tr>
+
+               <tr>
+                <td>
+                    <label>Új ár:</label>
+                </td>
+                <td>
+                    <input type="number" id="partnewPrice" name="partNewPrice">
+                </td>
+               </tr>
+               <tr style="text-align: center;">
+                <td colspan="2">
+                    <button class="partButton" type="submit" onlick="setNewPrice()">Ár módosítása</button>
+                </td>
+               </tr>
+            </form>
+
+       
+    </table>
+    
+    
+</body>
+</html>         
