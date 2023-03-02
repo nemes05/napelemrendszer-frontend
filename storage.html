@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="functions.js"></script>
     <title>Raktár</title>
 </head>
@@ -11,18 +13,20 @@
 <body>
     <div><img id="storagePicture" src="storagePicture2.png"></div>
     <div><a id="logoutText">Kijelentkezés</a></div>
-    
+
     <ul id="storage_menu">
-        
-        <li> <a onclick="addNewPart()" >Új alkatrészek felvétele</a></li>
+
+        <li> <a onclick="addNewPart()">Új alkatrészek felvétele</a></li>
         <li> <a onclick="setPrice()">Ár módosítás</a></li>
         <li> <a onclick="listMissingParts()">Hiányzó alkatrészek listázása</a></li>
         <li> <a onclick="listReservedParts()">Foglalt alkatrészek listázása</a></li>
         <li> <a onclick="addShippedPart()">Beérkezett alkatrész felvétel</a></li>
         <li> <a onclick="boxManagement()">Rekesz kezelés</a></li>
-          
+
     </ul>
-    <iframe id='myFrame' title='Új alkatrész felvitele' width='100%' height='200px' frameBorder="0", hidden="hidden"></iframe>
+    <iframe id='myFrame' title='Új alkatrész felvitele' width='100%' height='200px' frameBorder="0" ,
+        hidden="hidden"></iframe>
     <div id="form_for_data"></div>
 </body>
+
 </html>
