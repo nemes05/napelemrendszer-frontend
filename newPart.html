@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="storage_manager_scripts.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
     <title>Új alkatrész felvétele</title>
@@ -9,44 +12,44 @@
 
 <body>
     <table style="margin-top:5%;margin-left:38%; margin-right: 30%; border:1px solid">
-        
-            <form id="newPartID">
-               <tr>
+
+        <form id="newPartID">
+            <tr>
                 <td>
                     <label>Alkatrész neve:</label>
                 </td>
                 <td>
                     <input type="text" id="partName" name="partName">
                 </td>
-               </tr>
+            </tr>
 
-               <tr>
+            <tr>
                 <td>
                     <label>Ár:</label>
                 </td>
                 <td>
-                    <input type="text" id="partPrice" name="partPrice">
+                    <input type="text" id="price" name="price">
                 </td>
-               </tr>
+            </tr>
 
-               <tr>
+            <tr>
                 <td>
                     <label>Maximális darabszám:</label>
                 </td>
                 <td>
-                    <input type="text" id="maxPieces" name="maxPieces">
+                    <input type="text" id="partPerBox" name="partPerBox">
                 </td>
-               </tr>
-               <tr style="text-align: center;">
+            </tr>
+            <tr style="text-align: center;">
                 <td colspan="2">
-                    <button class="partButton" type="submit" onlick="addNewPartScript()">Új alkatrész felvétele</button>
+                    <button class="partButton" type="submit" onclick="addNewPartScript()">Új alkatrész
+                        felvétele</button>
                 </td>
-               </tr>
-            </form>
+            </tr>
+        </form>
 
-       
     </table>
-    
-    
+
 </body>
-</html>         
+
+</html>
