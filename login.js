@@ -7,7 +7,7 @@ function login() {
     $.each(formData, function () {
         json[this.name] = this.value;
     });
-
+    
     //Handels server response
     http1.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
