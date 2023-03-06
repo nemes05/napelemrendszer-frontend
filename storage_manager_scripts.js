@@ -1,4 +1,4 @@
-var http = new XMLHttpRequest;
+var http = new XMLHttpRequest();
 
 function addNewPartScript() {
     var formData = $('#newPartID').serializeArray();
@@ -18,7 +18,7 @@ function addNewPartScript() {
 
     http.open("POST", "http://localhost:3000/addPart");
     http.setRequestHeader("Content-Type", "application/json");
-    http1.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send(JSON.stringify(json));
 }
 
@@ -36,6 +36,6 @@ function setNewPrice() {
     }
     http.open("PATCH", "http://localhost:3000/modifyPartPrice/" + $("#partSelect option:selected").attr("id"));
     http.setRequestHeader("Content-Type", "application/json");
-    http1.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send(JSON.stringify(json));
 }

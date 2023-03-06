@@ -1,5 +1,5 @@
 'use strict'
-var http = new XMLHttpRequest;
+var http = new XMLHttpRequest();
 
 function listMissingParts() {
     alert("Jelenleg ez a funkció még nem elérhető.")
@@ -31,8 +31,8 @@ function loadItemsDropdown() {
 
         //Creates the dropdown and puts it in the div
         if (this.readyState == 4 && this.status == 200) {
-            let response = JSON.parse(this.response);
 
+            let response = JSON.parse(this.response);
             var select = document.getElementById("partSelect");
 
             $.each(response.result, function () {
@@ -53,6 +53,7 @@ function loadItemsDropdown() {
     }
 
     http.open("GET", "http://localhost:3000/getAllParts");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
 }
 
