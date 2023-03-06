@@ -7,24 +7,26 @@ function login() {
     $.each(formData, function () {
         json[this.name] = this.value;
     });
-    
+
     //Handels server response
     http1.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            let response=JSON.parse(this.response);
-            
-            if(response.permission == "Raktarvezeto"){
+
+            let response = JSON.parse(this.response);
+            document.cookie = "token=" + response.token;
+
+            if (response.permission == "Raktarvezeto") {
                 location.replace('storage.html');
             }
-            if(response.permission == "Szakember"){
+            if (response.permission == "Szakember") {
                 location.replace('constructor.html');
             }
-            if(response.permission == "Raktaros"){
+            if (response.permission == "Raktaros") {
                 alert('This user is not set yet!')
             }
         }
         //Handles incorrect creditentials
-        else if(this.readyState == 4 && this.status == 401){
+        else if (this.readyState == 4 && this.status == 401) {
             alert('Hibás felhasználónév vagy jelszó');
         }
     };
@@ -33,4 +35,9 @@ function login() {
     http1.open("POST", "http://localhost:3000/login");
     http1.setRequestHeader("Content-Type", "application/json");
     http1.send(JSON.stringify(json));
+}
+
+function logout() {
+    document.cookie = "token=; expires= Thu, 21 Aug 2014 20:00:00 UTC";
+    location.replace('index.html');
 }
