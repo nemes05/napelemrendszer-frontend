@@ -1,6 +1,6 @@
 var http = new XMLHttpRequest();
 
-function addNewPartScript() {
+export function addNewPartScript() {
     var formData = $('#newPartID').serializeArray();
     var json = {};
     $.each(formData, function () {
@@ -22,7 +22,7 @@ function addNewPartScript() {
     http.send(JSON.stringify(json));
 }
 
-function setNewPrice() {
+export function setNewPrice() {
     var json = {};
     json["price"] = $("#partNewPrice").val();
 
