@@ -14,26 +14,24 @@ function boxManagement() {
     alert("Jelenleg ez a funkció még nem elérhető.")
 }
 
-function addNewPart() {
+export function addNewPart() {
     var iframe = document.getElementById('myFrame');
     iframe.src = "newPart.html";
     iframe.hidden = false;
 }
 
-function setPrice() {
+export function setPrice() {
     var iframe = document.getElementById('myFrame');
     iframe.src = "setPrice.html";
-    iframe.hidden = false;
 }
 
-function loadItemsDropdown() {
+export function loadItemsDropdown() {
     http.onreadystatechange = function () {
-
         //Creates the dropdown and puts it in the div
         if (this.readyState == 4 && this.status == 200) {
 
             let response = JSON.parse(this.response);
-            var select = document.getElementById("partSelect");
+            var select = document.getElementById('myFrame').contentWindow.document.getElementById("partSelect");
 
             $.each(response.result, function () {
                 var opt = document.createElement("option");
@@ -43,7 +41,8 @@ function loadItemsDropdown() {
                 select.appendChild(opt);
             });
 
-            $("#previousPrice").text(response.result[0].price);
+            document.getElementById('myFrame').contentWindow.document.getElementById("previousPrice").innerHTML = response.result[0].price;
+            document.getElementById('myFrame').hidden = false;
         }
 
         //Handles error
@@ -57,7 +56,7 @@ function loadItemsDropdown() {
     http.send();
 }
 
-function changeCurrentPriceValue() {
+export function changeCurrentPriceValue() {
     //Changes the 'Régi ár' dynamically
     $("#previousPrice").text($("#partSelect").val());
 }
