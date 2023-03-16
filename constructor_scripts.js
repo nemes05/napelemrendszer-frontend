@@ -9,12 +9,12 @@ function newProjectFrame() {
 
 //Implement the communication with client-server
 function addNewProject() {
-  var formData = $("#newProjectID");
+  var formData = $("#newProjectID").serializeArray();
   var json = {};
   $.each(formData, function () {
     json[this.name] = this.value;
-  });
 
+  });
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 201) {
       alert("Új projekt hozzáadva!");
