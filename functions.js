@@ -23,12 +23,10 @@ export function addNewPart() {
 export function setPrice() {
     var iframe = document.getElementById('myFrame');
     iframe.src = "setPrice.html";
-    iframe.hidden = false;
 }
 
 export function loadItemsDropdown() {
     http.onreadystatechange = function () {
-
         //Creates the dropdown and puts it in the div
         if (this.readyState == 4 && this.status == 200) {
 
@@ -44,6 +42,7 @@ export function loadItemsDropdown() {
             });
 
             document.getElementById('myFrame').contentWindow.document.getElementById("previousPrice").innerHTML = response.result[0].price;
+            document.getElementById('myFrame').hidden = false;
         }
 
         //Handles error

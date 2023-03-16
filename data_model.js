@@ -10,20 +10,4 @@ export class Part {
         this.price = price;
         this.partPerBox = partPerBox;
     }
-
-    /*set partID(id) {
-        this.#partID = id;
-    }
-
-    set partName(name) {
-        this.#partName = name;
-    }
-
-    set price(pr) {
-        this.#price = pr;
-    }
-
-    set partPerBox(part) {
-        this.#partPerBox = part;
-    }*/
 }
