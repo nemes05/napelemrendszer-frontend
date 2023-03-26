@@ -22,7 +22,7 @@ function login() {
                 location.replace('constructor.html');
             }
             if (response.permission == "Raktaros") {
-                alert('This user is not set yet!')
+                location.replace('storekeeper.html');
             }
         }
         //Handles incorrect creditentials

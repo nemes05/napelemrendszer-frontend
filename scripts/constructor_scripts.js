@@ -29,3 +29,22 @@ function addNewProject() {
   http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
   http.send(JSON.stringify(json));
 }
+function listProject(){
+  alert("Ez a funkció jelenleg nem elérhető!")
+}
+function listParts(){
+  alert("Ez a funkció jelenleg nem elérhető!")
+}
+function draft(){
+  alert("Ez a funkció jelenleg nem elérhető!")
+}
+function addWorkingTime(){
+  alert("Ez a funkció jelenleg nem elérhető!")
+}
+function priceCalculation(){
+  alert("Ez a funkció jelenleg nem elérhető!")
+}
+function finishProject(){
+  alert("Ez a funkció jelenleg nem elérhető!")
+}
+
