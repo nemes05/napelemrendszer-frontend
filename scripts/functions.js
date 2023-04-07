@@ -21,8 +21,8 @@ export function addNewPart() {
 }
 
 export function setPrice() {
-    var iframe = document.getElementById('myFrame');
-    iframe.src = "setPrice.html";
+    $('#myFrame').attr("src","setPrice.html")
+    $('#myFrame').attr('hidden','hidden')
 }
 
 export function loadItemsDropdown() {
@@ -31,7 +31,7 @@ export function loadItemsDropdown() {
         if (this.readyState == 4 && this.status == 200) {
 
             let response = JSON.parse(this.response);
-            var select = document.getElementById('myFrame').contentWindow.document.getElementById("partSelect");
+            var select = $('#myFrame').contents().find('#partSelect')[0]
 
             $.each(response.result, function () {
                 var opt = document.createElement("option");
@@ -41,8 +41,8 @@ export function loadItemsDropdown() {
                 select.appendChild(opt);
             });
 
-            document.getElementById('myFrame').contentWindow.document.getElementById("previousPrice").innerHTML = response.result[0].price;
-            document.getElementById('myFrame').hidden = false;
+            $('#myFrame').contents().find('#previousPrice').html(response.result[0].price)
+            $('#myFrame').removeAttr("hidden")
         }
 
         //Handles error
