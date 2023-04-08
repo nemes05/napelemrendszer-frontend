@@ -13,27 +13,27 @@ export class Part {
 }
 
 export class Project {
-    address = null;
+    project_address = null;
     description = null;
     
-    constructor(address, description){
-        this.address = address;
+    constructor(project_address, description){
+        this.project_address = project_address;
         this.description = description;
     }
 }
 
 export class Customer {
     name = null;
-    SSN = null;
-    home_address = null;
-    phone_number = null;
+    customerSSN = null;
+    address = null;
+    phone = null;
     email = null;
 
-    constructor(name, SSN, home_address, phone_number, email) {
+    constructor(name, customerSSN, address, phone, email) {
         this.name = name;
-        this.SSN = SSN;
-        this.home_address = home_address;
-        this.phone_number = phone_number;
-        this.email = email
+        this.customerSSN = customerSSN;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
     }
 }

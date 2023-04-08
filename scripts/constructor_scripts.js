@@ -6,20 +6,20 @@ var http = new XMLHttpRequest();
 //Implement the communication with client-server
 export function addNewProject() {
   var project = new Project();
-  project.address = $('#projectAddressID').val();
+  project.project_address = $('#projectAddressID').val();
   project.description = $('#projectDescriptionID').val();
 
   var customer = new Customer();
   customer.name = $('#customerNameID').val();
-  customer.SSN = $('#customerSSNID').val();
-  customer.home_address = $('#customerAddressID').val();
-  customer.phone_number = $('#customerPhoneID').val();
+  customer.customerSSN = $('#customerSSNID').val();
+  customer.address = $('#customerAddressID').val();
+  customer.phone = $('#customerPhoneID').val();
   customer.email = $('#customerEmailID').val();
+  console.log(JSON.stringify(Object.assign({},customer,project)));
 
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 201) {
       alert("Új projekt hozzáadva!");
-      iframe.hidden = true;
     }
     if (this.readyState == 4 && this.status == 400) {
       alert("Valmi hiba történt kérjük próbálja újra!");
@@ -28,7 +28,7 @@ export function addNewProject() {
   http.open("POST", "http://localhost:3000/newProject");
   http.setRequestHeader("Content-Type", "application/json");
   http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
-  http.send(JSON.stringify([project, customer]));
+  http.send(JSON.stringify(Object.assign({},customer,project)));
 }
 
 function listProject(){
