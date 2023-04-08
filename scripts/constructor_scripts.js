@@ -59,7 +59,33 @@ export function listProject(){
         projectArray.push(project);
         customerArray.push(customer);
       });
+      var tr = document.createElement("tr");
+      var th1 = document.createElement("th");
+      var th2 = document.createElement("th");
+      var th3 = document.createElement("th");
+      var th4 = document.createElement("th");
+      var th5 = document.createElement("th");
+      var th6 = document.createElement("th");
+      var th7 = document.createElement("th");
+      var th8 = document.createElement("th");
+      th1.innerHTML="Helyszín";
+      tr.appendChild(th1);
+      th2.innerHTML="Leírás";
+      tr.appendChild(th2);
+      th3.innerHTML="Megrendelési idő";
+      tr.appendChild(th3);
+      th4.innerHTML="Munkaidő";
+      tr.appendChild(th4);
+      th5.innerHTML="Ár";
+      tr.appendChild(th5);
+      th6.innerHTML="Állapot";
+      tr.appendChild(th6);
+      th7.innerHTML="Megrendelő";
+      tr.appendChild(th7);
+      th8.innerHTML="Telefonszám";
+      tr.appendChild(th8);
 
+      table.appendChild(tr);
       for(var i = 0; i < projectArray.length; i++) {
         var tr = document.createElement("tr");
         console.log(i)
@@ -78,6 +104,7 @@ export function listProject(){
           }
         });
         table.appendChild(tr);
+        table.classList.add("table")
       }
       console.log(table)
       $('#constructorIFrame').attr('hidden','hidden');
