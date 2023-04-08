@@ -15,10 +15,12 @@ export function addNewProject() {
   customer.address = $('#customerAddressID').val();
   customer.phone = $('#customerPhoneID').val();
   customer.email = $('#customerEmailID').val();
-  console.log(JSON.stringify(Object.assign({},customer,project)));
 
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 201) {
+      $('#newProjectID :input').each(function(){
+        $(this).val("");
+      });
       alert("Új projekt hozzáadva!");
     }
     if (this.readyState == 4 && this.status == 400) {
