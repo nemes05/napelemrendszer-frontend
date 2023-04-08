@@ -31,9 +31,9 @@
             <div class="d-grid gap-2 mx-auto d-sm-block" style="text-align: center;">
                 <button type="button" class="btn btn-secondary mt-1" id="newProjectButtonID">Új projekt
                     felvétele</button>
-                <button type="button" class="btn btn-secondary mt-1" onclick="listProject()">Projektek
+                <button type="button" class="btn btn-secondary mt-1" id="listAllProjectButtonID">Projektek
                     listázása</button>
-                <button type="button" class="btn btn-secondary mt-1" onclick="listParts()">Alkatrészek
+                <button type="button" class="btn btn-secondary mt-1" id="listAllPartsButtonID">Alkatrészek
                     listázása</button>
                 <button type="button" class="btn btn-secondary mt-1" onclick="draft()">Projekthez rendelés</button>
                 <button type="button" class="btn btn-secondary mt-1" onclick="addWorkingTime()">Munkavégzési
@@ -48,6 +48,10 @@
     <section>
         <iframe id='constructorIFrame' title='myframe' width="100%" height='500px' frameBorder="0" , hidden="hidden"
             style="margin-top:2%"></iframe>
+        <div class="d-flex justify-content-center text-nowrap">
+            <div class="table-responsive w-75" id="showTableID" hidden="hidden">
+            </div>
+        </div>
     </section>
 </body>
 

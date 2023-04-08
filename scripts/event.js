@@ -34,5 +34,13 @@ if (document.getElementById('addNewProjectSriptButtonID')) {
 }
 
 if (document.getElementById('newProjectButtonID')) {
-    document.getElementById('newProjectButtonID').addEventListener('click', functions.newProjectFrame);
+    document.getElementById('newProjectButtonID').addEventListener('click', functions.newProject);
+}
+
+if(document.getElementById('listAllProjectButtonID')){
+    document.getElementById('listAllProjectButtonID').addEventListener('click', constructor_scripts.listProject);
+}
+
+if(document.getElementById('listAllPartsButtonID')){
+    document.getElementById('listAllPartsButtonID').addEventListener('click', constructor_scripts.listParts);
 }

@@ -41,7 +41,7 @@ export function loadItemsDropdown() {
                 opt.text = this.partName;
                 select.appendChild(opt);
             });
-
+            
             $('#myFrame').contents().find('#previousPrice').html(response.result[0].price)
             $('#myFrame').removeAttr("hidden")
         }
@@ -64,7 +64,8 @@ export function changeCurrentPriceValue() {
 
 //Constructor iframe functions
 //Shows new project form
-export function newProjectFrame() {
+export function newProject() {
     $('#constructorIFrame').attr('src','newProject.html');
+    $('#showTableID').attr('hidden','hidden')
     $('#constructorIFrame').removeAttr('hidden');
-  }
+}
