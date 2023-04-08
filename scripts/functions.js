@@ -64,7 +64,8 @@ export function changeCurrentPriceValue() {
 
 //Constructor iframe functions
 //Shows new project form
-export function newProjectFrame() {
+export function newProject() {
     $('#constructorIFrame').attr('src','newProject.html');
+    $('#showTableID').attr('hidden','hidden')
     $('#constructorIFrame').removeAttr('hidden');
-  }
+}

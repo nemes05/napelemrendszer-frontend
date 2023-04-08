@@ -5,9 +5,6 @@ var http = new XMLHttpRequest();
 
 //Implement the communication with client-server
 export function addNewProject() {
-  //Clears previous functions' div
-  document.getElementById("element").style.display = "none";
-
   var project = new Project();
   project.project_address = $('#projectAddressID').val();
   project.description = $('#projectDescriptionID').val();
@@ -41,9 +38,14 @@ export function listProject(){
     if(this.readyState == 4 && this.status == 200){
       var projectArray = []
       var customerArray = []
+      var headTitles = ["Helyszín","Leírás","Megrendelési idő","Munkaidő","Ár","Állapot","Megrendelő","Telefonszám"]
       var table = document.createElement("table")
+      var thead = document.createElement("thead")
+      var tbody = document.createElement("tbody")
+      var tr = document.createElement("tr")
+      tbody.classList.add("table-group-divider")
+      table.classList.add("table","table-striped")
       let response = JSON.parse(this.response)
-      console.log(response);
 
       $.each(response, function(){
         var project = new Project();
@@ -62,36 +64,18 @@ export function listProject(){
         projectArray.push(project);
         customerArray.push(customer);
       });
-      var tr = document.createElement("tr");
-      var th1 = document.createElement("th");
-      var th2 = document.createElement("th");
-      var th3 = document.createElement("th");
-      var th4 = document.createElement("th");
-      var th5 = document.createElement("th");
-      var th6 = document.createElement("th");
-      var th7 = document.createElement("th");
-      var th8 = document.createElement("th");
-      th1.innerHTML="Helyszín";
-      tr.appendChild(th1);
-      th2.innerHTML="Leírás";
-      tr.appendChild(th2);
-      th3.innerHTML="Megrendelési idő";
-      tr.appendChild(th3);
-      th4.innerHTML="Munkaidő";
-      tr.appendChild(th4);
-      th5.innerHTML="Ár";
-      tr.appendChild(th5);
-      th6.innerHTML="Állapot";
-      tr.appendChild(th6);
-      th7.innerHTML="Megrendelő";
-      tr.appendChild(th7);
-      th8.innerHTML="Telefonszám";
-      tr.appendChild(th8);
 
-      table.appendChild(tr);
+      headTitles.forEach(title => {
+        var th = document.createElement("th")
+        th.innerHTML = title;
+        tr.appendChild(th);
+      });
+      
+      thead.appendChild(tr)
+      table.appendChild(thead);
+
       for(var i = 0; i < projectArray.length; i++) {
         var tr = document.createElement("tr");
-        console.log(i)
         $.each(projectArray[i],function(){
           if(this != undefined) {
             var td = document.createElement("td");
@@ -106,12 +90,12 @@ export function listProject(){
             tr.appendChild(td);
           }
         });
-        table.appendChild(tr);
-        table.classList.add("table")
+        tbody.appendChild(tr);
       }
-      console.log(table)
-      $('#constructorIFrame').attr('hidden','hidden');
+      table.appendChild(tbody)
       $('#showTableID').html(table);
+      $('#constructorIFrame').attr('hidden','hidden')
+      $('#showTableID').removeAttr('hidden');
     }
     if(this.readyState == 4 && this.status == 400){
       alert("Valami hiba történt");
@@ -123,11 +107,18 @@ export function listProject(){
   http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
   http.send();
 }
+
 export function listParts(){
   http.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200){
       var partArray = []
+      var headTitles = ["Alkatrész neve", "Ár", "Elérhető darabszám"]
+      var tr = document.createElement("tr")
+      var thead = document.createElement("thead")
+      var tbody = document.createElement("tbody")
       var table = document.createElement("table")
+      tbody.classList.add("table-group-divider")
+      table.classList.add("table","table-striped")
       let response = JSON.parse(this.response)
 
 
@@ -136,25 +127,32 @@ export function listParts(){
        mypart.partName=this.partName;
        mypart.price=this.price;
        mypart.availablePieces=this.availablePieces;
-
-        partArray.push(mypart);
+       partArray.push(mypart);
       });
-      var tr = document.createElement("tr");
-      var th1 = document.createElement("th");
-      var th2 = document.createElement("th");
-      var th3 = document.createElement("th");
-      th1.innerHTML="Alkatrész neve";
-      tr.appendChild(th1);
-      th2.innerHTML="Ár";
-      tr.appendChild(th2);
-      th3.innerHTML="Elérhető darabszám";
-      tr.appendChild(th3);
-      table.appendChild(tr);
 
+      // var tr = document.createElement("tr");
+      // var th1 = document.createElement("th");
+      // var th2 = document.createElement("th");
+      // var th3 = document.createElement("th");
+      // th1.innerHTML="Alkatrész neve";
+      // tr.appendChild(th1);
+      // th2.innerHTML="Ár";
+      // tr.appendChild(th2);
+      // th3.innerHTML="Elérhető darabszám";
+      // tr.appendChild(th3);
+      // table.appendChild(tr);
+
+      headTitles.forEach(title => {
+        var th = document.createElement("th")
+        th.innerHTML = title;
+        tr.appendChild(th);
+      });
+
+      thead.appendChild(tr);
+      table.appendChild(thead);
 
       for(var i = 0; i < partArray.length; i++) {
         var tr = document.createElement("tr");
-        console.log(i)
         $.each(partArray[i],function(){
           if(this != undefined) {
             var td = document.createElement("td");
@@ -162,11 +160,12 @@ export function listParts(){
             tr.appendChild(td);
           }
         });
-        table.appendChild(tr);
-        table.classList.add("table")
+        tbody.appendChild(tr);
+        table.appendChild(tbody);
       }
-      $('#constructorIFrame').attr('hidden','hidden');
       $('#showTableID').html(table);
+      $('#constructorIFrame').attr('hidden','hidden');
+      $('#showTableID').removeAttr('hidden');
     }
     if(this.readyState == 4 && this.status == 400){
       alert("Valami hiba történt");
