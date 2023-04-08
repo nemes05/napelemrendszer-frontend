@@ -3,12 +3,14 @@ export class Part {
     partName = null;
     price = null;
     partPerBox = null;
+    availablePieces = null;
 
-    constructor(partID, partName, price, partPerBox) {
+    constructor(partID, partName, price, partPerBox, availablePieces) {
         this.partID = partID;
         this.partName = partName;
         this.price = price;
         this.partPerBox = partPerBox;
+        this.availablePieces = this.availablePieces;
     }
 }
 

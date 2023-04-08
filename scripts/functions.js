@@ -41,7 +41,7 @@ export function loadItemsDropdown() {
                 opt.text = this.partName;
                 select.appendChild(opt);
             });
-
+            
             $('#myFrame').contents().find('#previousPrice').html(response.result[0].price)
             $('#myFrame').removeAttr("hidden")
         }

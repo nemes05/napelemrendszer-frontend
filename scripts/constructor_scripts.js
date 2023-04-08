@@ -1,10 +1,13 @@
 "use strict";
-import { Project, Customer } from "./data_model.js";
+import { Part, Project, Customer } from "./data_model.js";
 
 var http = new XMLHttpRequest();
 
 //Implement the communication with client-server
 export function addNewProject() {
+  //Clears previous functions' div
+  document.getElementById("element").style.display = "none";
+
   var project = new Project();
   project.project_address = $('#projectAddressID').val();
   project.description = $('#projectDescriptionID').val();
@@ -120,8 +123,61 @@ export function listProject(){
   http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
   http.send();
 }
-function listParts(){
-  alert("Ez a funkció jelenleg nem elérhető!")
+export function listParts(){
+  http.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200){
+      var partArray = []
+      var table = document.createElement("table")
+      let response = JSON.parse(this.response)
+
+
+      $.each(response, function(){
+       var mypart = new Part();
+       mypart.partName=this.partName;
+       mypart.price=this.price;
+       mypart.availablePieces=this.availablePieces;
+
+        partArray.push(mypart);
+      });
+      var tr = document.createElement("tr");
+      var th1 = document.createElement("th");
+      var th2 = document.createElement("th");
+      var th3 = document.createElement("th");
+      th1.innerHTML="Alkatrész neve";
+      tr.appendChild(th1);
+      th2.innerHTML="Ár";
+      tr.appendChild(th2);
+      th3.innerHTML="Elérhető darabszám";
+      tr.appendChild(th3);
+      table.appendChild(tr);
+
+
+      for(var i = 0; i < partArray.length; i++) {
+        var tr = document.createElement("tr");
+        console.log(i)
+        $.each(partArray[i],function(){
+          if(this != undefined) {
+            var td = document.createElement("td");
+            td.innerHTML = this;
+            tr.appendChild(td);
+          }
+        });
+        table.appendChild(tr);
+        table.classList.add("table")
+      }
+      $('#constructorIFrame').attr('hidden','hidden');
+      $('#showTableID').html(table);
+    }
+    if(this.readyState == 4 && this.status == 400){
+      alert("Valami hiba történt");
+    }
+  };
+
+  http.open("GET", "http://localhost:3000/getAllPartsAndAccess");
+  http.setRequestHeader("Content-Type", "application/json");
+  http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+  http.send();
+  
 }
 function draft(){
   alert("Ez a funkció jelenleg nem elérhető!")

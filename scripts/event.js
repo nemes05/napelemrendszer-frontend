@@ -41,3 +41,7 @@ if(document.getElementById('listAllProjectButtonID')){
     $('#constructorIFrame').attr('hidden','hidden');
     document.getElementById('listAllProjectButtonID').addEventListener('click', constructor_scripts.listProject);
 }
+if(document.getElementById('listAllPartsButtonID')){
+    $('#constructorIFrame').attr('hidden','hidden');
+    document.getElementById('listAllPartsButtonID').addEventListener('click', constructor_scripts.listParts);
+}
