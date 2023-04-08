@@ -15,10 +15,20 @@ export class Part {
 export class Project {
     project_address = null;
     description = null;
+    orderDate = null;
+    workingTime = null;
+    laborFee = null;
+    stateID = null;
+    stateName = null;
     
-    constructor(project_address, description){
+    constructor(project_address, description, orderDate, workingTime, laborFee, stateID, stateName){
         this.project_address = project_address;
         this.description = description;
+        this.orderDate = orderDate;
+        this.workingTime = workingTime;
+        this.laborFee = laborFee;
+        this.stateName = stateName;
+        this.stateID = stateID;
     }
 }
 

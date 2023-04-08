@@ -36,3 +36,8 @@ if (document.getElementById('addNewProjectSriptButtonID')) {
 if (document.getElementById('newProjectButtonID')) {
     document.getElementById('newProjectButtonID').addEventListener('click', functions.newProjectFrame);
 }
+
+if(document.getElementById('listAllProjectButtonID')){
+    $('#constructorIFrame').attr('hidden','hidden');
+    document.getElementById('listAllProjectButtonID').addEventListener('click', constructor_scripts.listProject);
+}

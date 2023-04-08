@@ -33,8 +33,65 @@ export function addNewProject() {
   http.send(JSON.stringify(Object.assign({},customer,project)));
 }
 
-function listProject(){
-  alert("Ez a funkció jelenleg nem elérhető!")
+export function listProject(){
+  http.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200){
+      var projectArray = []
+      var customerArray = []
+      var table = document.createElement("table")
+      let response = JSON.parse(this.response)
+      console.log(response);
+
+      $.each(response, function(){
+        var project = new Project();
+        var customer = new Customer();
+
+        project.description = this.description;
+        project.laborFee = this.laborFee;
+        project.orderDate = new Date(this.orderDate).toLocaleDateString();
+        project.project_address = this.address;
+        project.stateName = this.stateName;
+        project.workingTime = this.workingTime;
+
+        customer.name = this.name;
+        customer.phone = this.phone;
+
+        projectArray.push(project);
+        customerArray.push(customer);
+      });
+
+      for(var i = 0; i < projectArray.length; i++) {
+        var tr = document.createElement("tr");
+        console.log(i)
+        $.each(projectArray[i],function(){
+          if(this != undefined) {
+            var td = document.createElement("td");
+            td.innerHTML = this;
+            tr.appendChild(td);
+          }
+        });
+        $.each(customerArray[i],function(){
+          if(this != undefined) {
+            var td = document.createElement("td");
+            td.innerHTML = this;
+            tr.appendChild(td);
+          }
+        });
+        table.appendChild(tr);
+      }
+      console.log(table)
+      $('#constructorIFrame').attr('hidden','hidden');
+      $('#showTableID').html(table);
+    }
+    if(this.readyState == 4 && this.status == 400){
+      alert("Valami hiba történt");
+    }
+  };
+
+  http.open("GET", "http://localhost:3000/getProjects");
+  http.setRequestHeader("Content-Type", "application/json");
+  http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+  http.send();
 }
 function listParts(){
   alert("Ez a funkció jelenleg nem elérhető!")
