@@ -1,20 +1,21 @@
 "use strict";
+import { Project, Customer } from "./data_model.js";
+
 var http = new XMLHttpRequest();
-//Shows new project form
-function newProjectFrame() {
-  var iframe = document.getElementById("constructorIFrame");
-  iframe.src = "newProject.html";
-  iframe.hidden = false;
-}
 
 //Implement the communication with client-server
-function addNewProject() {
-  var formData = $("#newProjectID").serializeArray();
-  var json = {};
-  $.each(formData, function () {
-    json[this.name] = this.value;
+export function addNewProject() {
+  var project = new Project();
+  project.address = $('#projectAddressID').val();
+  project.description = $('#projectDescriptionID').val();
 
-  });
+  var customer = new Customer();
+  customer.name = $('#customerNameID').val();
+  customer.SSN = $('#customerSSNID').val();
+  customer.home_address = $('#customerAddressID').val();
+  customer.phone_number = $('#customerPhoneID').val();
+  customer.email = $('#customerEmailID').val();
+
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 201) {
       alert("Új projekt hozzáadva!");
@@ -27,8 +28,9 @@ function addNewProject() {
   http.open("POST", "http://localhost:3000/newProject");
   http.setRequestHeader("Content-Type", "application/json");
   http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
-  http.send(JSON.stringify(json));
+  http.send(JSON.stringify([project, customer]));
 }
+
 function listProject(){
   alert("Ez a funkció jelenleg nem elérhető!")
 }

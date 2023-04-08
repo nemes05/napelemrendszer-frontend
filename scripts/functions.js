@@ -1,6 +1,7 @@
 'use strict'
 var http = new XMLHttpRequest();
 
+//Storage manager iframe functions
 function listMissingParts() {
     alert("Jelenleg ez a funkció még nem elérhető.")
 }
@@ -60,3 +61,10 @@ export function changeCurrentPriceValue() {
     //Changes the 'Régi ár' dynamically
     $("#previousPrice").text($("#partSelect").val());
 }
+
+//Constructor iframe functions
+//Shows new project form
+export function newProjectFrame() {
+    $('#constructorIFrame').attr('src','newProject.html');
+    $('#constructorIFrame').removeAttr('hidden');
+  }
