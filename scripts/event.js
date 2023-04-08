@@ -1,5 +1,6 @@
 import * as functions from './functions.js'
 import * as storage_manager_scripts from './storage_manager_scripts.js'
+import * as constructor_scripts from './constructor_scripts.js'
 
 if (document.getElementById('addNewPartButtonID')) {
     document.getElementById('addNewPartButtonID').addEventListener('click', functions.addNewPart);
@@ -26,4 +27,12 @@ if (document.getElementById('partSelect')) {
 
 if (document.getElementById('addNewPartScriptButtonID')) {
     document.getElementById('addNewPartScriptButtonID').addEventListener('click', storage_manager_scripts.addNewPartScript);
+}
+
+if (document.getElementById('addNewProjectSriptButtonID')) {
+    document.getElementById('addNewProjectSriptButtonID').addEventListener('click', constructor_scripts.addNewProject);
+}
+
+if (document.getElementById('newProjectButtonID')) {
+    document.getElementById('newProjectButtonID').addEventListener('click', functions.newProjectFrame);
 }

@@ -16,7 +16,7 @@
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="scripts/login.js"></script>
-    <script src="scripts/constructor_scripts.js"></script>
+    <script src="scripts/event.js" type="module" defer></script>
     <title>Szakember</title>
 </head>
 
@@ -29,11 +29,15 @@
                 <button type="button" class="btn btn-outline-danger" onclick="logout()">Kijelentkezés</button>
             </div>
             <div class="d-grid gap-2 mx-auto d-sm-block" style="text-align: center;">
-                <button type="button" class="btn btn-secondary mt-1" onclick="newProjectFrame()">Új projekt felvétele</button>
-                <button type="button" class="btn btn-secondary mt-1" onclick="listProject()">Projektek listázása</button>
-                <button type="button" class="btn btn-secondary mt-1" onclick="listParts()">Alkatrészek listázása</button>
+                <button type="button" class="btn btn-secondary mt-1" id="newProjectButtonID">Új projekt
+                    felvétele</button>
+                <button type="button" class="btn btn-secondary mt-1" onclick="listProject()">Projektek
+                    listázása</button>
+                <button type="button" class="btn btn-secondary mt-1" onclick="listParts()">Alkatrészek
+                    listázása</button>
                 <button type="button" class="btn btn-secondary mt-1" onclick="draft()">Projekthez rendelés</button>
-                <button type="button" class="btn btn-secondary mt-1" onclick="addWorkingTime()">Munkavégzési idő</button>
+                <button type="button" class="btn btn-secondary mt-1" onclick="addWorkingTime()">Munkavégzési
+                    idő</button>
                 <button type="button" class="btn btn-secondary mt-1" onclick="priceCalculation()">Árkalkuláció</button>
                 <button type="button" class="btn btn-secondary mt-1" onclick="finishProject()">Projekt lezárása</button>
 
