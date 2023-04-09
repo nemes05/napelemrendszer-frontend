@@ -20,7 +20,7 @@
     <title>Raktárkezelő</title>
 </head>
 
-<body>
+<body id="storageBodyID">
     <section>
         <div class="container">
             <img src="images/StockRoom.png" class="mx-auto d-block">
@@ -28,7 +28,8 @@
                 <button type="button" class="btn btn-outline-danger" onclick="logout()">Kijelentkezés</button>
             </div>
             <div class="d-grid gap-2 mx-auto d-sm-block" style="text-align: center;">
-                <button type="button" id="addNewPartButtonID" class="btn btn-secondary mt-1" >Új alkatrészek felvétele</button>
+                <button type="button" id="addNewPartButtonID" class="btn btn-secondary mt-1">Új alkatrészek
+                    felvétele</button>
                 <button type="button" id="setPriceButtonID" class="btn btn-secondary mt-1">Ár módosítás</button>
                 <button type="button" class="btn btn-secondary mt-1" onclick="listMissingParts()">Hiányzó alkatrészek
                     listázása</button>

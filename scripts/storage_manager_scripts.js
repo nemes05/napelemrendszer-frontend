@@ -1,4 +1,5 @@
 import { Part } from "./data_model.js";
+import * as functions from "./functions.js";
 
 var http = new XMLHttpRequest();
 
@@ -15,6 +16,9 @@ export function addNewPartScript() {
         }
         if (this.readyState == 4 && this.status == 400) {
             alert("Valmi hiba történt kérjük próbálja újra!");
+        }
+        if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
         }
     };
 
@@ -33,8 +37,12 @@ export function setNewPrice() {
             document.getElementById("previousPrice").innerHTML = part.price;
             $("#partNewPrice").val("");
             alert("Az ár sikeresen módosítva!");
-        } else if (this.readyState == 4 && this.status == 400) {
+        }
+        if (this.readyState == 4 && this.status == 400) {
             alert("Az ár rögzítése nem sikerült!");
+        }
+        if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
         }
     };
     http.open("PATCH", "http://localhost:3000/modifyPartPrice/" + $("#partSelect option:selected").attr("id"));
