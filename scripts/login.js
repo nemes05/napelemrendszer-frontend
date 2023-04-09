@@ -2,7 +2,7 @@ var http1 = new XMLHttpRequest();
 
 function login() {
     //formats Login data to JSON
-    var formData = $('#loginForm').serializeArray();
+    var formData = $("#loginForm").serializeArray();
     var json = {};
     $.each(formData, function () {
         json[this.name] = this.value;
@@ -11,23 +11,22 @@ function login() {
     //Handels server response
     http1.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-
             let response = JSON.parse(this.response);
             document.cookie = "token=" + response.token;
 
             if (response.permission == "Raktarvezeto") {
-                location.replace('storage.html');
+                location.replace("storage.html");
             }
             if (response.permission == "Szakember") {
-                location.replace('constructor.html');
+                location.replace("constructor.html");
             }
             if (response.permission == "Raktaros") {
-                location.replace('storekeeper.html');
+                location.replace("storekeeper.html");
             }
         }
         //Handles incorrect creditentials
         else if (this.readyState == 4 && this.status == 401) {
-            alert('Hibás felhasználónév vagy jelszó');
+            alert("Hibás felhasználónév vagy jelszó");
         }
     };
 
@@ -39,5 +38,5 @@ function login() {
 
 function logout() {
     document.cookie = "token=; expires= Thu, 21 Aug 2014 20:00:00 UTC";
-    location.replace('index.html');
+    location.replace("index.html");
 }
