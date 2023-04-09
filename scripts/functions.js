@@ -69,3 +69,10 @@ export function newProject() {
     $('#showTableID').attr('hidden','hidden')
     $('#constructorIFrame').removeAttr('hidden');
 }
+//Shows working time iframe
+export function addWorkingTime(){
+    $('#constructorIFrame').attr('src','workingTimeAndLaborFee.html');
+    $('#showTableID').attr('hidden','hidden')
+    $('#constructorIFrame').removeAttr('hidden');
+
+}

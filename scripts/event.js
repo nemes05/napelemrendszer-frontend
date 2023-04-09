@@ -44,3 +44,10 @@ if(document.getElementById('listAllProjectButtonID')){
 if(document.getElementById('listAllPartsButtonID')){
     document.getElementById('listAllPartsButtonID').addEventListener('click', constructor_scripts.listParts);
 }
+if(document.getElementById('addWorkingTimeButtonID')){
+    document.getElementById('addWorkingTimeButtonID').addEventListener('click', functions.addWorkingTime);
+}
+if(document.getElementById('addworkingTimeID')){
+    document.getElementById('addworkingTimeID').addEventListener('click', constructor_scripts.addWorkingTimeAndLaborFee);
+}
+

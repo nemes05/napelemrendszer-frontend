@@ -109,9 +109,9 @@ export function listProject(){
 }
 
 export function listParts(){
-  http.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200){
-      var partArray = []
+    http.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200){
+            var partArray = []
       var headTitles = ["Alkatrész neve", "Ár", "Elérhető darabszám"]
       var tr = document.createElement("tr")
       var thead = document.createElement("thead")
@@ -129,18 +129,6 @@ export function listParts(){
        mypart.availablePieces=this.availablePieces;
        partArray.push(mypart);
       });
-
-      // var tr = document.createElement("tr");
-      // var th1 = document.createElement("th");
-      // var th2 = document.createElement("th");
-      // var th3 = document.createElement("th");
-      // th1.innerHTML="Alkatrész neve";
-      // tr.appendChild(th1);
-      // th2.innerHTML="Ár";
-      // tr.appendChild(th2);
-      // th3.innerHTML="Elérhető darabszám";
-      // tr.appendChild(th3);
-      // table.appendChild(tr);
 
       headTitles.forEach(title => {
         var th = document.createElement("th")
@@ -178,12 +166,14 @@ export function listParts(){
   http.send();
   
 }
+export function addWorkingTimeAndLaborFee(){
+    var project = new Project();
+    project.laborFee = $('#laborFeeID').val();
+    project.workingTime = $('#workingTimeID').val();
+}
 function draft(){
-  alert("Ez a funkció jelenleg nem elérhető!")
-}
-function addWorkingTime(){
-  alert("Ez a funkció jelenleg nem elérhető!")
-}
+    alert("Ez a funkció jelenleg nem elérhető!")
+  }
 function priceCalculation(){
   alert("Ez a funkció jelenleg nem elérhető!")
 }
