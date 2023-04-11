@@ -1,5 +1,6 @@
 "use strict";
 import { Part, Project, Customer } from "./data_model.js";
+import * as functions from "./functions.js";
 
 var http = new XMLHttpRequest();
 
@@ -25,6 +26,9 @@ export function addNewProject() {
         }
         if (this.readyState == 4 && this.status == 400) {
             alert("Valmi hiba történt kérjük próbálja újra!");
+        }
+        if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
         }
     };
     http.open("POST", "http://localhost:3000/newProject");
@@ -100,6 +104,9 @@ export function listProject() {
         if (this.readyState == 4 && this.status == 400) {
             alert("Valami hiba történt");
         }
+        if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
     };
 
     http.open("GET", "http://localhost:3000/getProjects");
@@ -120,6 +127,7 @@ export function listParts() {
             tbody.classList.add("table-group-divider");
             table.classList.add("table", "table-striped");
             let response = JSON.parse(this.response);
+            
             //Initialize parts
             $.each(response, function () {
                 var mypart = new Part();
@@ -128,6 +136,7 @@ export function listParts() {
                 mypart.availablePieces = this.availablePieces;
                 partArray.push(mypart);
             });
+          
             //Creates the headers
             headTitles.forEach((title) => {
                 var th = document.createElement("th");
@@ -137,6 +146,7 @@ export function listParts() {
 
             thead.appendChild(tr);
             table.appendChild(thead);
+
             //Creates the rows including parts
             for (var i = 0; i < partArray.length; i++) {
                 var tr = document.createElement("tr");
@@ -150,6 +160,7 @@ export function listParts() {
                 tbody.appendChild(tr);
                 table.appendChild(tbody);
             }
+
             //Shows table
             $("#showTableID").html(table);
             $("#constructorIFrame").attr("hidden", "hidden");
@@ -158,6 +169,9 @@ export function listParts() {
         if (this.readyState == 4 && this.status == 400) {
             alert("Valami hiba történt");
         }
+        if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
     };
 
     http.open("GET", "http://localhost:3000/getAllPartsAndAccess");
@@ -165,6 +179,7 @@ export function listParts() {
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
 }
+
 export function addWorkingTimeAndLaborFee() {
     //Creates a project and save working time and labor fee attrib
     var project = new Project();
@@ -185,6 +200,7 @@ export function addWorkingTimeAndLaborFee() {
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send(JSON.stringify(project));
 }
+
 function draft() {
     alert("Ez a funkció jelenleg nem elérhető!");
 }

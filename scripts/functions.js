@@ -1,5 +1,4 @@
 "use strict";
-
 var http = new XMLHttpRequest();
 
 //Storage manager iframe functions
@@ -69,6 +68,7 @@ export function newProject() {
     $("#showTableID").attr("hidden", "hidden");
     $("#constructorIFrame").removeAttr("hidden");
 }
+
 //Shows working time iframe
 export function addWorkingTime() {
     $("#constructorIFrame").attr("src", "workingTimeAndLaborFee.html");
@@ -100,4 +100,30 @@ export function loadProjectsDropDown() {
     http.open("GET", "http://localhost:3000/getProjects");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
+}
+
+export function timeOut() {
+    var count = 5;
+    var div = document.createElement("div");
+    var div2 = document.createElement("div");
+    div.classList.add("d-flex", "justify-content-center", "mt-5");
+    div2.classList.add("alert", "alert-warning", "w-50", "text-center");
+    div.appendChild(div2);
+    var arr = Array.from(window.parent.document.body.children);
+    console.log(arr);
+    arr.forEach((element) => {
+        console.log(element);
+        element.setAttribute("hidden", "hidden");
+    });
+    var countdown = setInterval(function () {
+        if (count <= 1) {
+            clearInterval(countdown);
+        }
+        div2.innerHTML = "Felhasználási idő lejárt <br> Kilépés: " + count;
+        window.parent.document.body.appendChild(div);
+        count = count - 1;
+    }, 1000);
+    setTimeout(function () {
+        window.parent.location.replace("index.html");
+    }, 6000);
 }
