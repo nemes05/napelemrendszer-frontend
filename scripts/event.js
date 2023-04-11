@@ -29,6 +29,7 @@ if (document.getElementById("addNewPartScriptButtonID")) {
     document.getElementById("addNewPartScriptButtonID").addEventListener("click", storage_manager_scripts.addNewPartScript);
 }
 
+//Contstructors' event listeners
 if (document.getElementById("addNewProjectSriptButtonID")) {
     document.getElementById("addNewProjectSriptButtonID").addEventListener("click", constructor_scripts.addNewProject);
 }
@@ -45,6 +46,16 @@ if (document.getElementById("listAllPartsButtonID")) {
     document.getElementById("listAllPartsButtonID").addEventListener("click", constructor_scripts.listParts);
 }
 
-// if (window.addEventListener) {
-//     window.addEventListener("load", () => functions.timeOut("constructor"));
-// }
+if (document.getElementById("addWorkingTimeButtonID")) {
+    document.getElementById("addWorkingTimeButtonID").addEventListener("click", functions.addWorkingTime);
+}
+if (document.getElementById("constructorIFrame")) {
+    document.getElementById("constructorIFrame").addEventListener("load", function () {
+        if ($("#constructorIFrame").attr("src") == "workingTimeAndLaborFee.html") {
+            functions.loadProjectsDropDown();
+        }
+    });
+}
+if (document.getElementById("addworkingTimeID")) {
+    document.getElementById("addworkingTimeID").addEventListener("click", constructor_scripts.addWorkingTimeAndLaborFee);
+}

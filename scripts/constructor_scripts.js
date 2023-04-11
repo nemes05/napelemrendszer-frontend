@@ -127,7 +127,8 @@ export function listParts() {
             tbody.classList.add("table-group-divider");
             table.classList.add("table", "table-striped");
             let response = JSON.parse(this.response);
-
+            
+            //Initialize parts
             $.each(response, function () {
                 var mypart = new Part();
                 mypart.partName = this.partName;
@@ -135,19 +136,8 @@ export function listParts() {
                 mypart.availablePieces = this.availablePieces;
                 partArray.push(mypart);
             });
-
-            // var tr = document.createElement("tr");
-            // var th1 = document.createElement("th");
-            // var th2 = document.createElement("th");
-            // var th3 = document.createElement("th");
-            // th1.innerHTML="Alkatrész neve";
-            // tr.appendChild(th1);
-            // th2.innerHTML="Ár";
-            // tr.appendChild(th2);
-            // th3.innerHTML="Elérhető darabszám";
-            // tr.appendChild(th3);
-            // table.appendChild(tr);
-
+          
+            //Creates the headers
             headTitles.forEach((title) => {
                 var th = document.createElement("th");
                 th.innerHTML = title;
@@ -157,6 +147,7 @@ export function listParts() {
             thead.appendChild(tr);
             table.appendChild(thead);
 
+            //Creates the rows including parts
             for (var i = 0; i < partArray.length; i++) {
                 var tr = document.createElement("tr");
                 $.each(partArray[i], function () {
@@ -169,6 +160,8 @@ export function listParts() {
                 tbody.appendChild(tr);
                 table.appendChild(tbody);
             }
+
+            //Shows table
             $("#showTableID").html(table);
             $("#constructorIFrame").attr("hidden", "hidden");
             $("#showTableID").removeAttr("hidden");
@@ -186,10 +179,29 @@ export function listParts() {
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
 }
-function draft() {
-    alert("Ez a funkció jelenleg nem elérhető!");
+
+export function addWorkingTimeAndLaborFee() {
+    //Creates a project and save working time and labor fee attrib
+    var project = new Project();
+    project.laborFee = $("#laborFeeID").val();
+    project.workingTime = $("#workingTimeID").val();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            //Cleans the form
+            document.getElementById("laborFeeAndWorkingTime").reset();
+            alert("A módosítás sikeres!");
+        } else if (this.readyState == 4 && this.status == 401) {
+            alert("A módosítás nem sikerült!");
+        }
+    };
+    //Sends parameter (projectID) and projects' data
+    http.open("PATCH", "http://localhost:3000/priceCalculator/" + $("#projectSelect option:selected").attr("id"));
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(project));
 }
-function addWorkingTime() {
+
+function draft() {
     alert("Ez a funkció jelenleg nem elérhető!");
 }
 function priceCalculation() {

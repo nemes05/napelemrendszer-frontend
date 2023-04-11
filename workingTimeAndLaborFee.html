@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/stylesForIframe.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="scripts/event.js" type="module" defer></script>
+    <title>Munkadíj és munkavégzési idő</title>
+</head>
+
+<body id="setPriceBodyID">
+
+
+    <section class="setPrice">
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="head text-center">
+                                        <h2>Munkadíj és munkavégzési idő meghatározása</h2>
+                                    </div>
+                                    <div class="head text-center">
+                                        <label>Válassza ki a projektet:</label>
+                                        <select name="projectSelect" id="projectSelect"></select>
+                                    </div>
+                                    <div class="col-12">
+                                        <form id="laborFeeAndWorkingTime">
+                                            <table class="col-12">
+                                                <thead class="text-center">
+                                                    <tr >
+                                                        <th class="col-4">Munkadíj:</th>
+                                                        <th class="col-4">Munkavégzési idő:</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="text-center">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="number" id="laborFeeID" name="laborFee"
+                                                            placeholder="Munkadíj" min="0" step="10000">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" id="workingTimeID" name="workingTime"
+                                                            placeholder="Munkaidő" min="0">
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="mt-5">
+                                                        <td colspan="2">
+                                                            <button type="button" id="addworkingTimeID"
+                                                    class="btn btn-success mt-2">Adatok rögzítése</button>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

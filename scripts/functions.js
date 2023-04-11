@@ -1,4 +1,4 @@
-//"use strict";
+"use strict";
 var http = new XMLHttpRequest();
 
 //Storage manager iframe functions
@@ -47,8 +47,7 @@ export function loadItemsDropdown() {
 
         //Handles error
         else if (this.readyState == 4 && this.status == 401) {
-            //alert("Nem tudtunk csatlakozni az adatbázishoz!");
-            timeOut();
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
         }
     };
 
@@ -68,6 +67,39 @@ export function newProject() {
     $("#constructorIFrame").attr("src", "newProject.html");
     $("#showTableID").attr("hidden", "hidden");
     $("#constructorIFrame").removeAttr("hidden");
+}
+
+//Shows working time iframe
+export function addWorkingTime() {
+    $("#constructorIFrame").attr("src", "workingTimeAndLaborFee.html");
+    $("#showTableID").attr("hidden", "hidden");
+    $("#constructorIFrame").removeAttr("hidden");
+}
+//Load the projects for set working time and labor fee
+export function loadProjectsDropDown() {
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let response = JSON.parse(this.response);
+            var select = $("#constructorIFrame").contents().find("#projectSelect")[0];
+            //Creates the list
+            $.each(response, function () {
+                var opt = document.createElement("option");
+                opt.value = this.projectID;
+                opt.id = this.projectID;
+                opt.text = this.address;
+                select.appendChild(opt);
+            });
+            //Shows the iframe
+            $("#constructorIFrame").removeAttr("hidden");
+        }
+        //Handles error
+        else if (this.readyState == 4 && this.status == 401) {
+            alert("Valami hiba történt a csatlakozás során!");
+        }
+    };
+    http.open("GET", "http://localhost:3000/getProjects");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send();
 }
 
 export function timeOut() {
