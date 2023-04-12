@@ -49,6 +49,7 @@ if (document.getElementById("listAllPartsButtonID")) {
 if (document.getElementById("addWorkingTimeButtonID")) {
     document.getElementById("addWorkingTimeButtonID").addEventListener("click", functions.addWorkingTime);
 }
+
 if (document.getElementById("constructorIFrame")) {
     document.getElementById("constructorIFrame").addEventListener("load", function () {
         if ($("#constructorIFrame").attr("src") == "workingTimeAndLaborFee.html") {
@@ -56,9 +57,11 @@ if (document.getElementById("constructorIFrame")) {
         }
     });
 }
+
 if (document.getElementById("addworkingTimeID")) {
     document.getElementById("addworkingTimeID").addEventListener("click", constructor_scripts.addWorkingTimeAndLaborFee);
 }
+
 if (document.getElementById("constructorIFrame")) {
     document.getElementById("constructorIFrame").addEventListener("load", function () {
         if ($("#constructorIFrame").attr("src") == "draft.html") {
@@ -66,9 +69,17 @@ if (document.getElementById("constructorIFrame")) {
         }
     });
 }
+
 if (document.getElementById("draftButtonID")) {
     document.getElementById("draftButtonID").addEventListener("click", functions.draft);
 }
+
 if (document.getElementById("draftID")) {
-    document.getElementById("draftID").addEventListener("click", constructor_scripts.draft);
+    document.getElementById("draftID").addEventListener("click", function () {
+        if ($("#piecesID").val() != "") {
+            constructor_scripts.draft();
+        } else {
+            alert("Kérjük adjon meg egy darabszámot!");
+        }
+    });
 }

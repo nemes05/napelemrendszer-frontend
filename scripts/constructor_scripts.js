@@ -1,5 +1,5 @@
 "use strict";
-import { Part, Project, Customer } from "./data_model.js";
+import { Part, Project, Customer, Draft } from "./data_model.js";
 import * as functions from "./functions.js";
 
 var http = new XMLHttpRequest();
@@ -198,12 +198,30 @@ export function addWorkingTimeAndLaborFee() {
             functions.timeOut();
         }
     };
+
     //Sends parameter (projectID) and projects' data
     http.open("PATCH", "http://localhost:3000/priceCalculator/" + $("#projectSelect option:selected").attr("id"));
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send(JSON.stringify(project));
 }
+
 export function draft() {
-    console.log("Jó helyen vagyunk");
+    var draft = new Draft(new Part(), 0);
+    draft.part.partID = $("#partSelect :selected").attr("id");
+    draft.reguiredQuantity = $("#piecesID").val();
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 201) {
+            alert("Sikeres hozzárendelés!");
+            $.each($(".setPrice input"), function () {
+                $(this).val("");
+            });
+        }
+    };
+
+    http.open("PATCH", "http://localhost:3000/draftProject/" + $("#projectSelect :selected").attr("id"));
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(draft));
 }
