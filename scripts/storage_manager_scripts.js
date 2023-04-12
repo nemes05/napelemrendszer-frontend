@@ -14,11 +14,25 @@ export function addNewPartScript() {
             document.getElementById("newPartID").reset();
             alert("Az új alkatrész hozzáadva");
         }
-        if (this.readyState == 4 && this.status == 400) {
-            alert("Valmi hiba történt kérjük próbálja újra!");
+
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
         }
-        if (this.readyState == 4 && this.status == 401) {
-            functions.timeOut();
+
+        //Handles timeout
+        else if (this.readyState == 4 && this.status == 401) {
+            timeOut();
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -38,11 +52,25 @@ export function setNewPrice() {
             $("#partNewPrice").val("");
             alert("Az ár sikeresen módosítva!");
         }
-        if (this.readyState == 4 && this.status == 400) {
-            alert("Az ár rögzítése nem sikerült!");
+
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
         }
-        if (this.readyState == 4 && this.status == 401) {
-            functions.timeOut();
+
+        //Handles timeout
+        else if (this.readyState == 4 && this.status == 401) {
+            timeOut();
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
     http.open("PATCH", "http://localhost:3000/modifyPartPrice/" + $("#partSelect option:selected").attr("id"));
