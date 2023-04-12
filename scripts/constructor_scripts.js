@@ -302,3 +302,35 @@ export function draft() {
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send(JSON.stringify(draft));
 }
+
+//nem tesztelt funkció (nincs endpoint)
+export function priceCalculationScript() {
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 201) {
+        }
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles expired token error
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+
+        //Handles permission error
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
+        }
+    };
+    //TODO: endpoint hozzáadása
+    http.open("PATCH", "http://localhost:3000//" + $("#priceCalculationProjectSelectID :selected").attr("id"));
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(draft));
+}

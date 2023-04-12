@@ -13,7 +13,7 @@ if (document.getElementById("setPriceButtonID")) {
 if (document.getElementById("myFrame")) {
     document.getElementById("myFrame").addEventListener("load", function () {
         if ($("#myFrame").attr("src") == "setPrice.html") {
-            functions.loadItemsDropdown();
+            functions.loadItemsDropdown("setPrice");
         }
     });
 }
@@ -53,21 +53,17 @@ if (document.getElementById("addWorkingTimeButtonID")) {
 if (document.getElementById("constructorIFrame")) {
     document.getElementById("constructorIFrame").addEventListener("load", function () {
         if ($("#constructorIFrame").attr("src") == "workingTimeAndLaborFee.html") {
-            functions.loadProjectsDropDown();
+            functions.loadProjectsDropDown("workingTimeAndLaborFee");
+        } else if ($("#constructorIFrame").attr("src") == "draft.html") {
+            functions.loadItemsDropdown("draft");
+        } else if ($("#constructorIFrame").attr("src") == "priceCalculation.html") {
+            functions.loadProjectsDropDown("priceCalculation");
         }
     });
 }
 
 if (document.getElementById("addworkingTimeID")) {
     document.getElementById("addworkingTimeID").addEventListener("click", constructor_scripts.addWorkingTimeAndLaborFee);
-}
-
-if (document.getElementById("constructorIFrame")) {
-    document.getElementById("constructorIFrame").addEventListener("load", function () {
-        if ($("#constructorIFrame").attr("src") == "draft.html") {
-            functions.dropdowns();
-        }
-    });
 }
 
 if (document.getElementById("draftButtonID")) {
@@ -82,4 +78,12 @@ if (document.getElementById("draftID")) {
             alert("Kérjük adjon meg egy darabszámot!");
         }
     });
+}
+
+if (document.getElementById("priceCalculationButtonID")) {
+    document.getElementById("priceCalculationButtonID").addEventListener("click", functions.priceCalculation);
+}
+
+if (document.getElementById("priceCalculationSendButtonID")) {
+    document.getElementById("priceCalculationSendButtonID").addEventListener("click", constructor_scripts.priceCalculationScript);
 }
