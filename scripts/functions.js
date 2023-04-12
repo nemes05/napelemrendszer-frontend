@@ -1,6 +1,6 @@
 "use strict";
 var http = new XMLHttpRequest();
-var errors = [400, 401, 403];
+var responeses = [200, 201, 400, 401, 403];
 
 //Storage manager iframe functions
 export function addNewPart() {
@@ -49,7 +49,7 @@ export function loadItemsDropdown() {
         }
 
         //Handles general error
-        else if (this.readyState == 4 && !errors.includes(this.status)) {
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
             alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
@@ -122,7 +122,7 @@ export function loadProjectsDropDown() {
         }
 
         //Handles general error
-        else if (this.readyState == 4 && !errors.includes(this.status)) {
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
             alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
@@ -165,7 +165,7 @@ export function dropdowns() {
         }
 
         //Handles general error
-        else if (this.readyState == 4 && !errors.includes(this.status)) {
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
             alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };

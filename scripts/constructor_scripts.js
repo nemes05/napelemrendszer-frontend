@@ -3,6 +3,7 @@ import { Part, Project, Customer, Draft } from "./data_model.js";
 import * as functions from "./functions.js";
 
 var http = new XMLHttpRequest();
+var responeses = [200, 201, 400, 401, 403];
 
 //Implement the communication with client-server
 export function addNewProject() {
@@ -24,11 +25,25 @@ export function addNewProject() {
             });
             alert("Új projekt hozzáadva!");
         }
-        if (this.readyState == 4 && this.status == 400) {
-            alert("Valmi hiba történt kérjük próbálja újra!");
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
         }
-        if (this.readyState == 4 && this.status == 401) {
+
+        //Handles expired token error
+        else if (this.readyState == 4 && this.status == 401) {
             functions.timeOut();
+        }
+
+        //Handles permission error
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
     http.open("POST", "http://localhost:3000/newProject");
@@ -101,11 +116,25 @@ export function listProject() {
             $("#constructorIFrame").attr("hidden", "hidden");
             $("#showTableID").removeAttr("hidden");
         }
-        if (this.readyState == 4 && this.status == 400) {
-            alert("Valami hiba történt");
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
         }
-        if (this.readyState == 4 && this.status == 401) {
+
+        //Handles expired token error
+        else if (this.readyState == 4 && this.status == 401) {
             functions.timeOut();
+        }
+
+        //Handles permission error
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -166,11 +195,25 @@ export function listParts() {
             $("#constructorIFrame").attr("hidden", "hidden");
             $("#showTableID").removeAttr("hidden");
         }
-        if (this.readyState == 4 && this.status == 400) {
-            alert("Valami hiba történt");
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
         }
-        if (this.readyState == 4 && this.status == 401) {
+
+        //Handles expired token error
+        else if (this.readyState == 4 && this.status == 401) {
             functions.timeOut();
+        }
+
+        //Handles permission error
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -191,11 +234,25 @@ export function addWorkingTimeAndLaborFee() {
             document.getElementById("laborFeeAndWorkingTime").reset();
             alert("A módosítás sikeres!");
         }
-        if (this.readyState == 4 && this.status == 400) {
-            alert("Valami hiba történt");
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
         }
-        if (this.readyState == 4 && this.status == 401) {
+
+        //Handles expired token error
+        else if (this.readyState == 4 && this.status == 401) {
             functions.timeOut();
+        }
+
+        //Handles permission error
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -217,6 +274,26 @@ export function draft() {
             $.each($(".setPrice input"), function () {
                 $(this).val("");
             });
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles expired token error
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+
+        //Handles permission error
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
