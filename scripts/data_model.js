@@ -10,11 +10,12 @@ export class Part {
         this.partName = partName;
         this.price = price;
         this.partPerBox = partPerBox;
-        this.availablePieces = this.availablePieces;
+        this.availablePieces = availablePieces;
     }
 }
 
 export class Project {
+    projectID = null;
     project_address = null;
     description = null;
     orderDate = null;
@@ -22,8 +23,8 @@ export class Project {
     laborFee = null;
     stateID = null;
     stateName = null;
-    
-    constructor(project_address, description, orderDate, workingTime, laborFee, stateID, stateName){
+
+    constructor(project_address, description, orderDate, workingTime, laborFee, stateID, stateName, projectID) {
         this.project_address = project_address;
         this.description = description;
         this.orderDate = orderDate;
@@ -31,6 +32,7 @@ export class Project {
         this.laborFee = laborFee;
         this.stateName = stateName;
         this.stateID = stateID;
+        this.projectID = projectID;
     }
 }
 
@@ -47,5 +49,15 @@ export class Customer {
         this.address = address;
         this.phone = phone;
         this.email = email;
+    }
+}
+
+export class Draft {
+    part = new Part();
+    reguiredQuantity = null;
+
+    constructor(part, reguiredQuantity) {
+        this.part = part;
+        this.reguiredQuantity = reguiredQuantity;
     }
 }

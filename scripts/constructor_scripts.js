@@ -1,5 +1,5 @@
 "use strict";
-import { Part, Project, Customer } from "./data_model.js";
+import { Part, Project, Customer, Draft } from "./data_model.js";
 import * as functions from "./functions.js";
 
 var http = new XMLHttpRequest();
@@ -127,7 +127,7 @@ export function listParts() {
             tbody.classList.add("table-group-divider");
             table.classList.add("table", "table-striped");
             let response = JSON.parse(this.response);
-            
+
             //Initialize parts
             $.each(response, function () {
                 var mypart = new Part();
@@ -136,7 +136,7 @@ export function listParts() {
                 mypart.availablePieces = this.availablePieces;
                 partArray.push(mypart);
             });
-          
+
             //Creates the headers
             headTitles.forEach((title) => {
                 var th = document.createElement("th");
@@ -190,10 +190,15 @@ export function addWorkingTimeAndLaborFee() {
             //Cleans the form
             document.getElementById("laborFeeAndWorkingTime").reset();
             alert("A módosítás sikeres!");
-        } else if (this.readyState == 4 && this.status == 401) {
-            alert("A módosítás nem sikerült!");
+        }
+        if (this.readyState == 4 && this.status == 400) {
+            alert("Valami hiba történt");
+        }
+        if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
         }
     };
+
     //Sends parameter (projectID) and projects' data
     http.open("PATCH", "http://localhost:3000/priceCalculator/" + $("#projectSelect option:selected").attr("id"));
     http.setRequestHeader("Content-Type", "application/json");
@@ -201,12 +206,22 @@ export function addWorkingTimeAndLaborFee() {
     http.send(JSON.stringify(project));
 }
 
-function draft() {
-    alert("Ez a funkció jelenleg nem elérhető!");
-}
-function priceCalculation() {
-    alert("Ez a funkció jelenleg nem elérhető!");
-}
-function finishProject() {
-    alert("Ez a funkció jelenleg nem elérhető!");
+export function draft() {
+    var draft = new Draft(new Part(), 0);
+    draft.part.partID = $("#partSelect :selected").attr("id");
+    draft.reguiredQuantity = $("#piecesID").val();
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 201) {
+            alert("Sikeres hozzárendelés!");
+            $.each($(".setPrice input"), function () {
+                $(this).val("");
+            });
+        }
+    };
+
+    http.open("PATCH", "http://localhost:3000/draftProject/" + $("#projectSelect :selected").attr("id"));
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(draft));
 }
