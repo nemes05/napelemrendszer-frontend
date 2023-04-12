@@ -1,5 +1,6 @@
 "use strict";
 var http = new XMLHttpRequest();
+var errors = [400, 401, 403];
 
 //Storage manager iframe functions
 export function addNewPart() {
@@ -32,9 +33,24 @@ export function loadItemsDropdown() {
             $("#myFrame").removeAttr("hidden");
         }
 
-        //Handles error
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles timeout
         else if (this.readyState == 4 && this.status == 401) {
+            timeOut();
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
             alert("Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !errors.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -62,12 +78,14 @@ export function addWorkingTime() {
     $("#showTableID").attr("hidden", "hidden");
     $("#constructorIFrame").attr("hidden", "hidden");
 }
+
 //Shows draft iframe
 export function draft() {
     $("#constructorIFrame").attr("src", "draft.html");
     $("#showTableID").attr("hidden", "hidden");
     $("#constructorIFrame").attr("hidden", "hidden");
 }
+
 //Load the projects for set working time and labor fee
 export function loadProjectsDropDown() {
     http.onreadystatechange = function () {
@@ -76,24 +94,43 @@ export function loadProjectsDropDown() {
             var select = $("#constructorIFrame").contents().find("#projectSelect")[0];
             //Creates the list
             $.each(response, function () {
-                var opt = document.createElement("option");
-                opt.value = this.projectID;
-                opt.id = this.projectID;
-                opt.text = this.address;
-                select.appendChild(opt);
+                if (this.stateName == "New" || this.stateName == "Draft") {
+                    var opt = document.createElement("option");
+                    opt.value = this.projectID;
+                    opt.id = this.projectID;
+                    opt.text = this.address;
+                    select.appendChild(opt);
+                }
             });
             //Shows the iframe
             $("#constructorIFrame").removeAttr("hidden");
         }
-        //Handles error
+
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles timeout
         else if (this.readyState == 4 && this.status == 401) {
-            alert("Valami hiba történt a csatlakozás során!");
+            timeOut();
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !errors.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
     http.open("GET", "http://localhost:3000/getProjects");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
 }
+
 export function dropdowns() {
     http.onreadystatechange = function () {
         //Creates the dropdown and puts it in the div
@@ -112,10 +149,24 @@ export function dropdowns() {
             loadProjectsDropDown();
         }
 
-        //Handles error
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles timeout
         else if (this.readyState == 4 && this.status == 401) {
-            alert("Valami hiba történt a csatlakozás során!");
-            //timeout
+            timeOut();
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !errors.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
