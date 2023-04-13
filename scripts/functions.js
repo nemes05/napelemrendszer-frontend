@@ -117,17 +117,40 @@ export function loadProjectsDropDown(caller) {
                 case "workingTimeAndLaborFee":
                     select = $("#constructorIFrame").contents().find("#projectSelect")[0];
                     break;
+                case "closeProject":
+                    select = $("#constructorIFrame").contents().find("#closeProjectProjectSelectID")[0];
+                    break;
             }
             //Creates the list
-            $.each(response, function () {
-                if (this.stateName == "New" || this.stateName == "Draft") {
+            if (caller == "draft") {
+                $.each(response, function () {
+                    if (this.stateName == "New" || this.stateName == "Draft") {
+                        var opt = document.createElement("option");
+                        opt.value = this.projectID;
+                        opt.id = this.projectID;
+                        opt.text = this.address;
+                        select.appendChild(opt);
+                    }
+                });
+            } else if (caller == "priceCalculation") {
+                $.each(response, function () {
+                    if (this.stateName == "Draft") {
+                        var opt = document.createElement("option");
+                        opt.value = this.projectID;
+                        opt.id = this.projectID;
+                        opt.text = this.address;
+                        select.appendChild(opt);
+                    }
+                });
+            } else {
+                $.each(response, function () {
                     var opt = document.createElement("option");
                     opt.value = this.projectID;
                     opt.id = this.projectID;
                     opt.text = this.address;
                     select.appendChild(opt);
-                }
-            });
+                });
+            }
             //Shows the iframe
             $("#constructorIFrame").removeAttr("hidden");
         }
@@ -159,6 +182,12 @@ export function loadProjectsDropDown(caller) {
 
 export function priceCalculation() {
     $("#constructorIFrame").attr("src", "priceCalculation.html");
+    $("#showTableID").attr("hidden", "hidden");
+    $("#constructorIFrame").attr("hidden", "hidden");
+}
+
+export function closeProject() {
+    $("#constructorIFrame").attr("src", "closeProject.html");
     $("#showTableID").attr("hidden", "hidden");
     $("#constructorIFrame").attr("hidden", "hidden");
 }
