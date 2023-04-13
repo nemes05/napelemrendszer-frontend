@@ -337,6 +337,7 @@ export function priceCalculationScript() {
 
 export function closeProjectScript() {
     var project = new Project();
+    project.projectID = $("#closeProjectProjectSelectID :selected").attr("id");
     project.stateID = $("#closeProjectStateSelectID :selected").attr("id");
     project.stateName = $("#closeProjectStateSelectID :selected").attr("name");
 
@@ -365,8 +366,8 @@ export function closeProjectScript() {
         }
     };
 
-    http.open("PATCH", "http://localhost:3000/closeProject/" + $("#closeProjectProjectSelectID :selected").attr("id"));
+    http.open("PATCH", "http://localhost:3000/closeProject/" + project.projectID + "/" + project.stateName);
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
-    http.send(JSON.stringify(project));
+    http.send();
 }
