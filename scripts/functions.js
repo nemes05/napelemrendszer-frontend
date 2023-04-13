@@ -14,12 +14,20 @@ export function setPrice() {
     $("#myFrame").attr("hidden", "hidden");
 }
 
-export function loadItemsDropdown() {
+export function loadItemsDropdown(caller) {
     http.onreadystatechange = function () {
         //Creates the dropdown and puts it in the div
         if (this.readyState == 4 && this.status == 200) {
             let response = JSON.parse(this.response);
-            var select = $("#myFrame").contents().find("#partSelect")[0];
+            var select = null;
+            switch (caller) {
+                case "setPrice":
+                    select = $("#myFrame").contents().find("#partSelect")[0];
+                    break;
+                case "draft":
+                    select = $("#constructorIFrame").contents().find("#partSelect")[0];
+                    break;
+            }
 
             $.each(response.result, function () {
                 var opt = document.createElement("option");
@@ -29,8 +37,15 @@ export function loadItemsDropdown() {
                 select.appendChild(opt);
             });
 
-            $("#myFrame").contents().find("#previousPrice").html(response.result[0].price);
-            $("#myFrame").removeAttr("hidden");
+            switch (caller) {
+                case "setPrice":
+                    $("#myFrame").contents().find("#previousPrice").html(response.result[0].price);
+                    $("#myFrame").removeAttr("hidden");
+                    break;
+                case "draft":
+                    loadProjectsDropDown("draft");
+                    break;
+            }
         }
 
         //Handles permission
@@ -87,11 +102,22 @@ export function draft() {
 }
 
 //Load the projects for set working time and labor fee
-export function loadProjectsDropDown() {
+export function loadProjectsDropDown(caller) {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let response = JSON.parse(this.response);
-            var select = $("#constructorIFrame").contents().find("#projectSelect")[0];
+            var select = null;
+            switch (caller) {
+                case "draft":
+                    select = $("#constructorIFrame").contents().find("#projectSelect")[0];
+                    break;
+                case "priceCalculation":
+                    select = $("#constructorIFrame").contents().find("#priceCalculationProjectSelectID")[0];
+                    break;
+                case "workingTimeAndLaborFee":
+                    select = $("#constructorIFrame").contents().find("#projectSelect")[0];
+                    break;
+            }
             //Creates the list
             $.each(response, function () {
                 if (this.stateName == "New" || this.stateName == "Draft") {
@@ -131,48 +157,10 @@ export function loadProjectsDropDown() {
     http.send();
 }
 
-export function dropdowns() {
-    http.onreadystatechange = function () {
-        //Creates the dropdown and puts it in the div
-        if (this.readyState == 4 && this.status == 200) {
-            let response = JSON.parse(this.response);
-            var select = $("#constructorIFrame").contents().find("#partSelect")[0];
-
-            $.each(response.result, function () {
-                var opt = document.createElement("option");
-                opt.value = this.price;
-                opt.id = this.partID;
-                opt.text = this.partName;
-                select.appendChild(opt);
-            });
-            //Creates Projects list
-            loadProjectsDropDown();
-        }
-
-        //Handles permission
-        else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
-        }
-
-        //Handles timeout
-        else if (this.readyState == 4 && this.status == 401) {
-            timeOut();
-        }
-
-        //Handles database error
-        else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
-        }
-
-        //Handles general error
-        else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
-        }
-    };
-
-    http.open("GET", "http://localhost:3000/getAllParts");
-    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
-    http.send();
+export function priceCalculation() {
+    $("#constructorIFrame").attr("src", "priceCalculation.html");
+    $("#showTableID").attr("hidden", "hidden");
+    $("#constructorIFrame").attr("hidden", "hidden");
 }
 
 export function timeOut() {
