@@ -303,10 +303,10 @@ export function draft() {
     http.send(JSON.stringify(draft));
 }
 
-//nem tesztelt funkció (nincs endpoint)
 export function priceCalculationScript() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
+            alert("Sikerült");
         }
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
@@ -328,9 +328,9 @@ export function priceCalculationScript() {
             alert("Valami hiba történt, kérjük próbálja újra!");
         }
     };
-    //TODO: endpoint hozzáadása
-    http.open("PATCH", "http://localhost:3000//" + $("#priceCalculationProjectSelectID :selected").attr("id"));
+
+    http.open("PATCH", "http://localhost:3000/priceCalculation/" + $("#priceCalculationProjectSelectID :selected").attr("id"));
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
-    http.send(JSON.stringify(draft));
+    http.send();
 }
