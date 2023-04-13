@@ -58,6 +58,8 @@ if (document.getElementById("constructorIFrame")) {
             functions.loadItemsDropdown("draft");
         } else if ($("#constructorIFrame").attr("src") == "priceCalculation.html") {
             functions.loadProjectsDropDown("priceCalculation");
+        } else if ($("#constructorIFrame").attr("src") == "closeProject.html") {
+            functions.loadProjectsDropDown("closeProject");
         }
     });
 }
@@ -86,4 +88,12 @@ if (document.getElementById("priceCalculationButtonID")) {
 
 if (document.getElementById("priceCalculationSendButtonID")) {
     document.getElementById("priceCalculationSendButtonID").addEventListener("click", constructor_scripts.priceCalculationScript);
+}
+
+if (document.getElementById("closeProjectButtonID")) {
+    document.getElementById("closeProjectButtonID").addEventListener("click", functions.closeProject);
+}
+
+if (document.getElementById("closeProjectSendButtonID")) {
+    document.getElementById("closeProjectSendButtonID").addEventListener("click", constructor_scripts.closeProjectScript);
 }

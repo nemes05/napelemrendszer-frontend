@@ -334,3 +334,39 @@ export function priceCalculationScript() {
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
 }
+
+export function closeProjectScript() {
+    var project = new Project();
+    project.stateID = $("#closeProjectStateSelectID :selected").attr("id");
+    project.stateName = $("#closeProjectStateSelectID :selected").attr("name");
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 201) {
+            alert("Sikerült");
+        }
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles expired token error
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+
+        //Handles permission error
+        else if (this.readyState == 4 && this.status == 403) {
+            alert("Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            alert("Valami hiba történt, kérjük próbálja újra!");
+        }
+    };
+
+    http.open("PATCH", "http://localhost:3000/closeProject/" + $("#closeProjectProjectSelectID :selected").attr("id"));
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(project));
+}
