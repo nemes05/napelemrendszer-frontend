@@ -17,7 +17,7 @@ export function addNewPartScript() {
 
         //Handles permission
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles timeout
@@ -27,12 +27,12 @@ export function addNewPartScript() {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -55,7 +55,7 @@ export function setNewPrice() {
 
         //Handles permission
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles timeout
@@ -65,12 +65,12 @@ export function setNewPrice() {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
     http.open("PATCH", "http://localhost:3000/modifyPartPrice/" + $("#partSelect option:selected").attr("id"));

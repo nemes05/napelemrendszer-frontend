@@ -28,7 +28,7 @@ export function addNewProject() {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles expired token error
@@ -38,12 +38,12 @@ export function addNewProject() {
 
         //Handles permission error
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
     http.open("POST", "http://localhost:3000/newProject");
@@ -119,7 +119,7 @@ export function listProject() {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles expired token error
@@ -129,12 +129,12 @@ export function listProject() {
 
         //Handles permission error
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -198,7 +198,7 @@ export function listParts() {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles expired token error
@@ -208,12 +208,12 @@ export function listParts() {
 
         //Handles permission error
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -232,12 +232,12 @@ export function addWorkingTimeAndLaborFee() {
         if (this.readyState == 4 && this.status == 200) {
             //Cleans the form
             document.getElementById("laborFeeAndWorkingTime").reset();
-            alert("A módosítás sikeres!");
+            functions.errorAlert("Siker!", "A módosítás sikeres!");
         }
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles expired token error
@@ -247,12 +247,12 @@ export function addWorkingTimeAndLaborFee() {
 
         //Handles permission error
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -270,7 +270,7 @@ export function draft() {
 
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
-            alert("Sikeres hozzárendelés!");
+            functions.errorAlert("Siker!", "Sikeres hozzárendelés!");
             $.each($(".setPrice input"), function () {
                 $(this).val("");
             });
@@ -278,7 +278,7 @@ export function draft() {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles expired token error
@@ -288,12 +288,12 @@ export function draft() {
 
         //Handles permission error
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -306,11 +306,11 @@ export function draft() {
 export function priceCalculationScript() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
-            alert("Sikerült");
+            functions.errorAlert("Siker!", "Sikeres ármeghatározás");
         }
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles expired token error
@@ -320,12 +320,12 @@ export function priceCalculationScript() {
 
         //Handles permission error
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -343,11 +343,11 @@ export function closeProjectScript() {
 
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
-            alert("Sikerült");
+            functions.errorAlert("Siker!", "A projekt lezárársa sikeres");
         }
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles expired token error
@@ -357,12 +357,12 @@ export function closeProjectScript() {
 
         //Handles permission error
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
