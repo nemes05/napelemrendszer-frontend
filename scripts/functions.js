@@ -50,7 +50,7 @@ export function loadItemsDropdown(caller) {
 
         //Handles permission
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles timeout
@@ -60,12 +60,12 @@ export function loadItemsDropdown(caller) {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            errorAlert("Figyelem", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -157,7 +157,7 @@ export function loadProjectsDropDown(caller) {
 
         //Handles permission
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles timeout
@@ -167,12 +167,12 @@ export function loadProjectsDropDown(caller) {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
     http.open("GET", "http://localhost:3000/getProjects");
@@ -216,4 +216,12 @@ export function timeOut() {
     setTimeout(function () {
         window.parent.location.replace("index.html");
     }, 6000);
+}
+
+export function errorAlert(title, body) {
+    var $head = $(window.parent.document.getElementById("errorHead"));
+    var $body = $(window.parent.document.getElementById("errorBody"));
+    $head.html(title);
+    $body.html(body);
+    window.parent.document.getElementById("alertDivID").removeAttribute("hidden");
 }

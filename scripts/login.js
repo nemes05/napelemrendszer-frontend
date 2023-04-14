@@ -11,6 +11,10 @@ function login() {
     //Handels server response
     http1.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            $("#username").addClass("is-valid");
+            $("#password").addClass("is-valid");
+            $("#authAlertID").attr("hidden", "hidden");
+
             let response = JSON.parse(this.response);
             document.cookie = "token=" + response.token;
 
@@ -26,7 +30,9 @@ function login() {
         }
         //Handles incorrect creditentials
         else if (this.readyState == 4 && this.status == 401) {
-            alert("Hibás felhasználónév vagy jelszó");
+            $("#username").addClass("is-invalid");
+            $("#password").addClass("is-invalid");
+            $("#authAlertID").removeAttr("hidden");
         }
     };
 

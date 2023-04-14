@@ -12,12 +12,12 @@ export function addNewPartScript() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
             document.getElementById("newPartID").reset();
-            alert("Az új alkatrész hozzáadva");
+            functions.errorAlert("Siker!", "Az új alkatrész hozzáadva");
         }
 
         //Handles permission
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles timeout
@@ -27,12 +27,12 @@ export function addNewPartScript() {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
 
@@ -50,12 +50,12 @@ export function setNewPrice() {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("previousPrice").innerHTML = part.price;
             $("#partNewPrice").val("");
-            alert("Az ár sikeresen módosítva!");
+            functions.errorAlert("Siker!", "Az ár sikeresen módosítva!");
         }
 
         //Handles permission
         else if (this.readyState == 4 && this.status == 403) {
-            alert("Nincs jogosultsága ehhez a művelethez!");
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
         }
 
         //Handles timeout
@@ -65,12 +65,12 @@ export function setNewPrice() {
 
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
-            alert("Nem tudtunk csatlakozni az adatbázishoz!");
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
         }
 
         //Handles general error
         else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            alert("Valami hiba történt, kérjük próbálja újra!");
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };
     http.open("PATCH", "http://localhost:3000/modifyPartPrice/" + $("#partSelect option:selected").attr("id"));
