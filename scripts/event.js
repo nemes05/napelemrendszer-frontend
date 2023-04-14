@@ -97,3 +97,9 @@ if (document.getElementById("closeProjectButtonID")) {
 if (document.getElementById("closeProjectSendButtonID")) {
     document.getElementById("closeProjectSendButtonID").addEventListener("click", constructor_scripts.closeProjectScript);
 }
+
+if (document.getElementById("alertCloseID")) {
+    document.getElementById("alertCloseID").addEventListener("click", function () {
+        document.getElementById("alertDivID").setAttribute("hidden", "hidden");
+    });
+}

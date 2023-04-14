@@ -23,7 +23,7 @@ export function addNewProject() {
             $("#newProjectID :input").each(function () {
                 $(this).val("");
             });
-            alert("Új projekt hozzáadva!");
+            functions.errorAlert("Siker!", "Új projekt hozzáadva!");
         }
 
         //Handles database error
