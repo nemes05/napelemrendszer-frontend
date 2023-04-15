@@ -350,12 +350,15 @@ export function priceCalculationScript() {
 export function closeProjectScript() {
     var project = new Project();
     project.projectID = $("#closeProjectProjectSelectID :selected").attr("id");
-    project.stateID = $("#closeProjectStateSelectID :selected").attr("id");
     project.stateName = $("#closeProjectStateSelectID :selected").attr("name");
 
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
-            functions.errorAlert("Siker!", "A projekt lezárársa sikeres");
+            if (project.stateName == "Failed") {
+                functions.errorAlert("Siker!", "<div>A projekt lezárult <span class='text-danger'>Failed</span> státusszal.</div>");
+            } else {
+                functions.errorAlert("Siker!", "<div>A projekt lezárult <span class='text-success'>Completed</span> státusszal.</div>");
+            }
         }
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
@@ -378,7 +381,7 @@ export function closeProjectScript() {
         }
     };
 
-    http.open("PATCH", "http://localhost:3000/closeProject/" + project.projectID + "/" + project.stateName);
+    http.open("PATCH", "http://localhost:3000/closeProject/" + project.projectID + "/" + project.stateID);
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
