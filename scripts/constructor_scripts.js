@@ -57,7 +57,7 @@ export function listProject() {
         if (this.readyState == 4 && this.status == 200) {
             var projectArray = [];
             var customerArray = [];
-            var headTitles = ["Helyszín", "Leírás", "Megrendelési idő", "Munkaidő", "Ár", "Állapot", "Megrendelő", "Telefonszám"];
+            var headTitles = ["Helyszín", "Leírás", "Megrendelési idő", "Munkaidő", "Munkadíj", "Anyagköltség", "Fizetendő", "Állapot", "Megrendelő", "Telefonszám"];
             var table = document.createElement("table");
             var thead = document.createElement("thead");
             var tbody = document.createElement("tbody");
@@ -70,12 +70,18 @@ export function listProject() {
                 var project = new Project();
                 var customer = new Customer();
 
-                project.description = this.description;
-                project.laborFee = this.laborFee;
-                project.orderDate = new Date(this.orderDate).toLocaleDateString();
+                if (this.materialCost == 0) {
+                    project.price = 0;
+                } else {
+                    project.price = this.price;
+                }
                 project.project_address = this.address;
-                project.stateName = this.stateName;
+                project.description = this.description;
+                project.orderDate = new Date(this.orderDate).toLocaleDateString();
                 project.workingTime = this.workingTime;
+                project.laborFee = this.laborFee;
+                project.materialCost = this.materialCost;
+                project.stateName = this.stateName;
 
                 customer.name = this.name;
                 customer.phone = this.phone;
@@ -306,7 +312,13 @@ export function draft() {
 export function priceCalculationScript() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
-            functions.errorAlert("Siker!", "Sikeres ármeghatározás");
+            var response = JSON.parse(this.response);
+            if (response.status == 3) {
+                functions.errorAlert("Siker!", "Nincs elég alkatrész a raktárban, amint érkeznek alkatrészek az árkalkuláció elkészül.");
+            } else if (response.status == 4) {
+                functions.errorAlert("Siker!", "Az árkalkuláció elkészült!");
+            }
+            window.parent.document.getElementById("constructorIFrame").setAttribute("hidden", "hidden");
         }
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
@@ -338,12 +350,15 @@ export function priceCalculationScript() {
 export function closeProjectScript() {
     var project = new Project();
     project.projectID = $("#closeProjectProjectSelectID :selected").attr("id");
-    project.stateID = $("#closeProjectStateSelectID :selected").attr("id");
     project.stateName = $("#closeProjectStateSelectID :selected").attr("name");
 
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
-            functions.errorAlert("Siker!", "A projekt lezárársa sikeres");
+            if (project.stateName == "Failed") {
+                functions.errorAlert("Siker!", "<div>A projekt lezárult <span class='text-danger'>Failed</span> státusszal.</div>");
+            } else {
+                functions.errorAlert("Siker!", "<div>A projekt lezárult <span class='text-success'>Completed</span> státusszal.</div>");
+            }
         }
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
@@ -366,7 +381,7 @@ export function closeProjectScript() {
         }
     };
 
-    http.open("PATCH", "http://localhost:3000/closeProject/" + project.projectID + "/" + project.stateName);
+    http.open("PATCH", "http://localhost:3000/closeProject/" + project.projectID + "/" + project.stateID);
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();

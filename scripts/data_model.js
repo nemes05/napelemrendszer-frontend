@@ -15,21 +15,25 @@ export class Part {
 }
 
 export class Project {
-    projectID = null;
     project_address = null;
     description = null;
     orderDate = null;
     workingTime = null;
     laborFee = null;
-    stateID = null;
+    materialCost = null;
+    price = null;
     stateName = null;
+    stateID = null;
+    projectID = null;
 
-    constructor(project_address, description, orderDate, workingTime, laborFee, stateID, stateName, projectID) {
+    constructor(project_address, description, orderDate, workingTime, laborFee, stateID, stateName, projectID, price, materialCost) {
         this.project_address = project_address;
         this.description = description;
         this.orderDate = orderDate;
         this.workingTime = workingTime;
         this.laborFee = laborFee;
+        this.materialCost = materialCost;
+        this.price = price;
         this.stateName = stateName;
         this.stateID = stateID;
         this.projectID = projectID;
