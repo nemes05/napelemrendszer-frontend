@@ -318,6 +318,7 @@ export function priceCalculationScript() {
             } else if (response.status == 4) {
                 functions.errorAlert("Siker!", "Az árkalkuláció elkészült!");
             }
+            window.parent.document.getElementById("constructorIFrame").setAttribute("hidden", "hidden");
         }
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
