@@ -151,8 +151,13 @@ export function loadProjectsDropDown(caller) {
                     select.appendChild(opt);
                 });
             }
+            console.log();
             //Shows the iframe
-            $("#constructorIFrame").removeAttr("hidden");
+            if (select.children.length == 0) {
+                errorAlert("Figyelem!", "Nincs projekt amire el lehet végezni a funkciót.");
+            } else {
+                $("#constructorIFrame").removeAttr("hidden");
+            }
         }
 
         //Handles permission
@@ -224,4 +229,5 @@ export function errorAlert(title, body) {
     $head.html(title);
     $body.html(body);
     window.parent.document.getElementById("alertDivID").removeAttribute("hidden");
+    window.parent.document.getElementById("alertCloseID").focus();
 }
