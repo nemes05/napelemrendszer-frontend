@@ -16,6 +16,12 @@ export function setPrice() {
     $("#myFrame").attr("hidden", "hidden");
 }
 
+export function incomingPart() {
+    $("#storageTableID").attr("hidden", "hidden");
+    $("#myFrame").attr("src", "incomingParts.html");
+    $("#myFrame").attr("hidden", "hidden");
+}
+
 export function loadItemsDropdown(caller) {
     http.onreadystatechange = function () {
         //Creates the dropdown and puts it in the div
@@ -28,6 +34,9 @@ export function loadItemsDropdown(caller) {
                     break;
                 case "draft":
                     select = $("#constructorIFrame").contents().find("#partSelect")[0];
+                    break;
+                case "incomigParts":
+                    select = $("#myFrame").contents().find("#partSelectForIncoming")[0];
                     break;
             }
 
@@ -46,6 +55,9 @@ export function loadItemsDropdown(caller) {
                     break;
                 case "draft":
                     loadProjectsDropDown("draft");
+                    break;
+                case "incomigParts":
+                    $("#myFrame").removeAttr("hidden");
                     break;
             }
         }

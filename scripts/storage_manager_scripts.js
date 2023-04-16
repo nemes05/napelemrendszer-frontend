@@ -224,3 +224,21 @@ export function getDemandedParts() {
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
 }
+
+export function incomingPartsScript() {
+    let part = new Part();
+    part.partID = $("#partSelectForIncoming :selected").attr("id");
+    part.pcs = $("#numberOfPartID").val();
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            $("#numberOfPartID").val("");
+            console.log(JSON.parse(this.response));
+        }
+    };
+
+    http.open("PATCH", "http://localhost:3000/incomingParts");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(part));
+}
