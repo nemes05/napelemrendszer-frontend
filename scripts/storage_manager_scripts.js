@@ -22,7 +22,7 @@ export function addNewPartScript() {
 
         //Handles timeout
         else if (this.readyState == 4 && this.status == 401) {
-            timeOut();
+            functions.timeOut();
         }
 
         //Handles database error
@@ -60,7 +60,7 @@ export function setNewPrice() {
 
         //Handles timeout
         else if (this.readyState == 4 && this.status == 401) {
-            timeOut();
+            functions.timeOut();
         }
 
         //Handles database error
@@ -77,4 +77,150 @@ export function setNewPrice() {
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send(JSON.stringify(part));
+}
+
+export function listMissingParts() {
+    let parts = [];
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let response = JSON.parse(this.response);
+            let headTitles = ["Alkatrész neve", "Ár"];
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            let table = document.createElement("table");
+            tbody.classList.add("table-group-divider");
+            table.classList.add("table", "table-striped");
+
+            headTitles.forEach((title) => {
+                let th = document.createElement("th");
+                th.innerHTML = title;
+                thead.appendChild(th);
+            });
+
+            response.forEach((element) => {
+                let part = new Part();
+                part.partID = element.partID;
+                part.partName = element.partName;
+                part.price = element.price;
+                parts.push(part);
+            });
+
+            parts.forEach((element) => {
+                let tr = document.createElement("tr");
+                tr.id = element.partID;
+                Object.values(element).forEach((details, index) => {
+                    if (details != undefined && index != 0) {
+                        let td = document.createElement("td");
+                        td.innerHTML = details;
+                        tr.appendChild(td);
+                    }
+                });
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            $("#storageTableID").html(table);
+            $("#myFrame").attr("hidden", "hidden");
+            $("#storageTableID").removeAttr("hidden");
+        }
+
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles timeout
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
+        }
+    };
+
+    http.open("GET", "http://localhost:3000/getMissingParts");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send();
+}
+
+export function getDemandedParts() {
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let parts = [];
+            let response = JSON.parse(this.response);
+            let headTitles = ["Alkatrész neve", "Hiányzó darabszám"];
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            let table = document.createElement("table");
+            tbody.classList.add("table-group-divider");
+            table.classList.add("table", "table-striped");
+
+            headTitles.forEach((title) => {
+                let th = document.createElement("th");
+                th.innerHTML = title;
+                thead.appendChild(th);
+            });
+
+            response.forEach((element) => {
+                let part = new Part();
+                part.partID = element.partID;
+                part.partName = element.partName;
+                part.missingQuantity = element.missingQuantity;
+                parts.push(part);
+            });
+
+            parts.forEach((element) => {
+                let tr = document.createElement("tr");
+                tr.id = element.partID;
+                Object.values(element).forEach((details, index) => {
+                    if (details != undefined && index != 0) {
+                        let td = document.createElement("td");
+                        td.innerHTML = details;
+                        tr.appendChild(td);
+                    }
+                });
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            $("#storageTableID").html(table);
+            $("#myFrame").attr("hidden", "hidden");
+            $("#storageTableID").removeAttr("hidden");
+        }
+
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles timeout
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
+        }
+    };
+
+    http.open("GET", "http://localhost:3000/getDemandedParts");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send();
 }

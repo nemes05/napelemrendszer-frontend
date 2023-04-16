@@ -21,12 +21,21 @@ if (document.getElementById("myFrame")) {
 if (document.getElementById("setNewPriceButtonID")) {
     document.getElementById("setNewPriceButtonID").addEventListener("click", storage_manager_scripts.setNewPrice);
 }
+
 if (document.getElementById("partSelect")) {
     document.getElementById("partSelect").addEventListener("change", functions.changeCurrentPriceValue);
 }
 
 if (document.getElementById("addNewPartScriptButtonID")) {
     document.getElementById("addNewPartScriptButtonID").addEventListener("click", storage_manager_scripts.addNewPartScript);
+}
+
+if (document.getElementById("listMissingPartsButtonID")) {
+    document.getElementById("listMissingPartsButtonID").addEventListener("click", storage_manager_scripts.listMissingParts);
+}
+
+if (document.getElementById("getDemandedPartsButtonID")) {
+    document.getElementById("getDemandedPartsButtonID").addEventListener("click", storage_manager_scripts.getDemandedParts);
 }
 
 //Contstructors' event listeners

@@ -4,12 +4,14 @@ var responeses = [200, 201, 400, 401, 403];
 
 //Storage manager iframe functions
 export function addNewPart() {
+    $("#storageTableID").attr("hidden", "hidden");
     var iframe = document.getElementById("myFrame");
     iframe.src = "newPart.html";
     iframe.hidden = false;
 }
 
 export function setPrice() {
+    $("#storageTableID").attr("hidden", "hidden");
     $("#myFrame").attr("src", "setPrice.html");
     $("#myFrame").attr("hidden", "hidden");
 }
