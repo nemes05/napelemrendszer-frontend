@@ -235,6 +235,7 @@ export function incomingPartsScript() {
             $("#numberOfPartID").val("");
             console.log("Első response:");
             console.log(JSON.parse(this.response));
+            location.replace("storageSelect.html");
             setBox();
         }
 
