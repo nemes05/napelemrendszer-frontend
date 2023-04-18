@@ -229,7 +229,6 @@ export function incomingPartsScript() {
     let part = new Part();
     part.partID = $("#partSelectForIncoming :selected").attr("id");
     part.pcs = $("#numberOfPartID").val();
-    console.log(window.parent.document.getElementById("myFrame"));
 
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -266,7 +265,6 @@ export function incomingPartsScript() {
 
 export function setBox(prevResponse) {
     window.parent.document.getElementById("myFrame").src = "storageSelect.html";
-    console.log(window.parent.document.getElementById("myFrame"));
     //console.log(window.parent.document.getElementById("myFrame"));
     //let json = '{"partID": "4","pcs": "4","needsToBeReservedInSelectedBoxes": "4","boxes": [{"row": "2","column": "1","level": "2"},{"row": "2","column": "1","level": "3"}]}';
 
