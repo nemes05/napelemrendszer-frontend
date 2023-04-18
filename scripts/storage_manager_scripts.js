@@ -229,14 +229,12 @@ export function incomingPartsScript() {
     let part = new Part();
     part.partID = $("#partSelectForIncoming :selected").attr("id");
     part.pcs = $("#numberOfPartID").val();
+    console.log(window.parent.document.getElementById("myFrame"));
 
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             $("#numberOfPartID").val("");
-            console.log("Első response:");
-            console.log(JSON.parse(this.response));
-            location.replace("storageSelect.html");
-            setBox();
+            if (this.response != "OK") setBox(this.response);
         }
 
         //Handles permission
@@ -266,37 +264,40 @@ export function incomingPartsScript() {
     http.send(JSON.stringify(part));
 }
 
-export function setBox() {
-    let json = '{"partID": "4","pcs": "4","needsToBeReservedInSelectedBoxes": "4","boxes": [{"row": "2","column": "1","level": "2"},{"row": "2","column": "1","level": "3"}]}';
+export function setBox(prevResponse) {
+    window.parent.document.getElementById("myFrame").src = "storageSelect.html";
+    console.log(window.parent.document.getElementById("myFrame"));
+    //console.log(window.parent.document.getElementById("myFrame"));
+    //let json = '{"partID": "4","pcs": "4","needsToBeReservedInSelectedBoxes": "4","boxes": [{"row": "2","column": "1","level": "2"},{"row": "2","column": "1","level": "3"}]}';
 
-    http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            functions.errorAlert("Siker!", "Alkatrész sikeresen felvéve.");
-        }
+    // http.onreadystatechange = function () {
+    //     if (this.readyState == 4 && this.status == 200) {
+    //         functions.errorAlert("Siker!", "Alkatrész sikeresen felvéve.");
+    //     }
 
-        //Handles permission
-        else if (this.readyState == 4 && this.status == 403) {
-            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
-        }
+    //     //Handles permission
+    //     else if (this.readyState == 4 && this.status == 403) {
+    //         functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
+    //     }
 
-        //Handles timeout
-        else if (this.readyState == 4 && this.status == 401) {
-            functions.timeOut();
-        }
+    //     //Handles timeout
+    //     else if (this.readyState == 4 && this.status == 401) {
+    //         functions.timeOut();
+    //     }
 
-        //Handles database error
-        else if (this.readyState == 4 && this.status == 400) {
-            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
-        }
+    //     //Handles database error
+    //     else if (this.readyState == 4 && this.status == 400) {
+    //         functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
+    //     }
 
-        //Handles general error
-        else if (this.readyState == 4 && !responeses.includes(this.status)) {
-            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
-        }
-    };
+    //     //Handles general error
+    //     else if (this.readyState == 4 && !responeses.includes(this.status)) {
+    //         functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
+    //     }
+    // };
 
-    http.open("PUT", "http://localhost:3000/incomingParts");
-    http.setRequestHeader("Content-Type", "application/json");
-    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
-    http.send(json);
+    // http.open("PUT", "http://localhost:3000/incomingParts");
+    // http.setRequestHeader("Content-Type", "application/json");
+    // http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    // http.send(json);
 }
