@@ -69,3 +69,16 @@ export class Draft {
         this.reguiredQuantity = reguiredQuantity;
     }
 }
+export class Box {
+    row = null;
+    column = null;
+    level = null;
+    partID = null;
+
+    constructor(row, column, level, partID) {
+        this.row = row;
+        this.column = column;
+        this.level = level;
+        this.partID = partID;
+    }
+}
