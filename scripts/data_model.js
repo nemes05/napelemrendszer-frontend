@@ -82,3 +82,16 @@ export class Box {
         this.partID = partID;
     }
 }
+export class SelectedBoxes {
+    //let json = '{"partID": "4","pcs": "4","needsToBeReservedInSelectedBoxes": "4","boxes": [{"row": "2","column": "1","level": "2"},
+    partID = null;
+    pcs = null;
+    needsToBeReservedInSelectedBoxes = null;
+    boxes = [];
+    constructor(partID, pcs, needsToBeReservedInSelectedBoxes, boxes) {
+        this.partID = partID;
+        this.pcs = pcs;
+        this.needsToBeReservedInSelectedBoxes = needsToBeReservedInSelectedBoxes;
+        this.boxes = boxes;
+    }
+}
