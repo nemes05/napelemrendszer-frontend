@@ -87,11 +87,11 @@ export class SelectedBoxes {
     partID = null;
     pcs = null;
     needsToBeReservedInSelectedBoxes = null;
-    boxes = [];
-    constructor(partID, pcs, needsToBeReservedInSelectedBoxes, boxes) {
+    boxes = null;
+
+    constructor(partID, pcs, needsToBeReservedInSelectedBoxes) {
         this.partID = partID;
         this.pcs = pcs;
         this.needsToBeReservedInSelectedBoxes = needsToBeReservedInSelectedBoxes;
-        this.boxes = boxes;
     }
 }

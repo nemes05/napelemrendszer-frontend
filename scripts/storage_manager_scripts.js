@@ -266,6 +266,7 @@ export function incomingPartsScript() {
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send(JSON.stringify(part));
 }
+
 export function clickTable(event) {
     let cell = event.target.closest("td");
     if (!cell) return;
@@ -289,7 +290,7 @@ export function clickTable(event) {
         }
         box.column = cell.cellIndex + 1;
         box.level = 5 - cell.parentElement.rowIndex;
-        console.log(selectedBoxes.boxes);
+        selectedBoxes.boxes = new Array();
         selectedBoxes.boxes.push(box);
     }
     if (boxesNeeded == 0) {
@@ -313,9 +314,11 @@ export function setBox(response) {
         box.partID = element.partID;
         boxArray.push(box);
     });
+
     var table1 = document.getElementById("storageFirstRowID");
     var table2 = document.getElementById("storageSecondRowID");
     var table3 = document.getElementById("storageThirdRowID");
+
     table1.addEventListener("click", function (event) {
         clickTable(event);
     });
@@ -359,6 +362,7 @@ export function setBox(response) {
             }
         }
     });
+
     for (var i = 0; i < 5; i++) {
         for (var j = 0; j < 4; j++) {
             if (table1.rows[i].cells[j].classList.length != 2) {
@@ -373,33 +377,32 @@ export function setBox(response) {
         }
     }
 }
-export function sendBox(cell) {
-    console.log("OKE");
-    // console.log(cell.cellIndex);
-    //console.log(cell.parentElement.rowIndex);
-    // http.onreadystatechange = function () {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //         functions.errorAlert("Siker!", "Alkatrész sikeresen felvéve.");
-    //     }
-    //     //Handles permission
-    //     else if (this.readyState == 4 && this.status == 403) {
-    //         functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
-    //     }
-    //     //Handles timeout
-    //     else if (this.readyState == 4 && this.status == 401) {
-    //         functions.timeOut();
-    //     }
-    //     //Handles database error
-    //     else if (this.readyState == 4 && this.status == 400) {
-    //         functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
-    //     }
-    //     //Handles general error
-    //     else if (this.readyState == 4 && !responeses.includes(this.status)) {
-    //         functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
-    //     }
-    // };
-    // http.open("PUT", "http://localhost:3000/incomingParts");
-    // http.setRequestHeader("Content-Type", "application/json");
-    // http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
-    // http.send();
+
+export function sendBox(obj) {
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            functions.errorAlert("Siker!", "Alkatrész sikeresen felvéve.");
+        }
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
+        }
+        //Handles timeout
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
+        }
+    };
+
+    http.open("PUT", "http://localhost:3000/incomingParts");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(obj));
 }
