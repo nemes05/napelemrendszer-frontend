@@ -262,13 +262,16 @@ export function incomingPartsScript() {
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send(JSON.stringify(part));
 }
-
+export async function loadStorage() {
+    window.parent.location.replace("storageSelect.html");
+    return 1;
+}
 export function setBox(response) {
-    console.log("AAAA");
-    console.log(window.parent.document.getElementById("myFrame"));
-    window.parent.document.getElementById("myFrame").src = "storageSelect.html";
-    console.log("BBBBB");
-    console.log(window.parent);
+    const x = loadStorage();
+    var boxesNeeded = response.boxesNeeded;
+    console.log("asd");
+    document.getElementById("boxesNeededID").innerHTML = "2";
+
     response = JSON.parse(response);
     let boxArray = [];
     var box = new Box();
