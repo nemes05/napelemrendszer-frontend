@@ -4,6 +4,8 @@ import * as functions from "./functions.js";
 var http = new XMLHttpRequest();
 var boxesNeeded = 0;
 var selectedBoxes = new SelectedBoxes();
+var responeses = [200, 201, 400, 401, 403];
+
 export function addNewPartScript() {
     var part = new Part();
     part.partName = $("#partName").val();
@@ -228,16 +230,20 @@ export function getDemandedParts() {
 
 export function incomingPartsScript() {
     let part = new Part();
-    part.partID = $("#partSelectForIncoming :selected").attr("id");
-    part.pcs = $("#numberOfPartID").val();
+    part.partID = parseInt($("#partSelectForIncoming :selected").attr("id"));
+    part.pcs = parseInt($("#numberOfPartID").val());
 
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             $("#numberOfPartID").val("");
-            if (this.response != "OK") {
-                $("#storageSectionID").removeAttr("hidden");
-                setBox(this.response);
-            }
+            functions.errorAlert("Siker!", "Alkatrész sikeresen hozzáadva.");
+        }
+
+        //Handles other response
+        else if (this.readyState == 4 && this.status == 202) {
+            $("#partSelectSectionID").attr("hidden", "hidden");
+            $("#storageSectionID").removeAttr("hidden");
+            setBox(this.response);
         }
 
         //Handles permission
@@ -301,7 +307,7 @@ export function clickTable(event) {
 export function setBox(response) {
     response = JSON.parse(response);
     selectedBoxes.partID = response.partID;
-    selectedBoxes.pcs = response.pcs;
+    selectedBoxes.pcs = response.remainingPcs;
     selectedBoxes.needsToBeReservedInSelectedBoxes = response.needsToBeReservedInSelectedBoxes;
     boxesNeeded = response.boxesNeeded;
     document.getElementById("boxesNeededID").innerHTML = boxesNeeded;
@@ -328,8 +334,6 @@ export function setBox(response) {
     table3.addEventListener("click", function (event) {
         clickTable(event);
     });
-
-    //let json = '{"partID": "4","pcs": "4","needsToBeReservedInSelectedBoxes": "4","boxes": [{"row": "2","column": "1","level": "2"},{"row": "2","column": "1","level": "3"}]}';
 
     boxArray.forEach((box) => {
         if (box.partID != null) {
@@ -381,6 +385,7 @@ export function setBox(response) {
 export function sendBox(obj) {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            window.parent.document.getElementById("incomingPartButtonID").click();
             functions.errorAlert("Siker!", "Alkatrész sikeresen felvéve.");
         }
         //Handles permission

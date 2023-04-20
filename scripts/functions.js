@@ -57,6 +57,7 @@ export function loadItemsDropdown(caller) {
                     loadProjectsDropDown("draft");
                     break;
                 case "incomigParts":
+                    $("#myFrame").contents().find("#partSelectSectionID").removeAttr("hidden");
                     $("#myFrame").removeAttr("hidden");
                     break;
             }
@@ -165,7 +166,6 @@ export function loadProjectsDropDown(caller) {
                     select.appendChild(opt);
                 });
             }
-            console.log();
             //Shows the iframe
             if (select.children.length == 0) {
                 errorAlert("Figyelem!", "Nincs projekt amire el lehet végezni a funkciót.");
@@ -219,9 +219,7 @@ export function timeOut() {
     div2.classList.add("alert", "alert-warning", "w-50", "text-center");
     div.appendChild(div2);
     var arr = Array.from(window.parent.document.body.children);
-    console.log(arr);
     arr.forEach((element) => {
-        console.log(element);
         element.setAttribute("hidden", "hidden");
     });
     var countdown = setInterval(function () {
