@@ -5,14 +5,16 @@ export class Part {
     partPerBox = null;
     availablePieces = null;
     missingQuantity = null;
+    pcs = null;
 
-    constructor(partID, partName, price, partPerBox, availablePieces, missingQuantity) {
+    constructor(partID, partName, price, partPerBox, availablePieces, missingQuantity, pcs) {
         this.partID = partID;
         this.partName = partName;
         this.price = price;
         this.partPerBox = partPerBox;
         this.availablePieces = availablePieces;
         this.missingQuantity = missingQuantity;
+        this.pcs = pcs;
     }
 }
 
@@ -65,5 +67,31 @@ export class Draft {
     constructor(part, reguiredQuantity) {
         this.part = part;
         this.reguiredQuantity = reguiredQuantity;
+    }
+}
+export class Box {
+    row = null;
+    column = null;
+    level = null;
+    partID = null;
+
+    constructor(row, column, level, partID) {
+        this.row = row;
+        this.column = column;
+        this.level = level;
+        this.partID = partID;
+    }
+}
+export class SelectedBoxes {
+    //let json = '{"partID": "4","pcs": "4","needsToBeReservedInSelectedBoxes": "4","boxes": [{"row": "2","column": "1","level": "2"},
+    partID = null;
+    pcs = null;
+    needsToBeReservedInSelectedBoxes = null;
+    boxes = null;
+
+    constructor(partID, pcs, needsToBeReservedInSelectedBoxes) {
+        this.partID = partID;
+        this.pcs = pcs;
+        this.needsToBeReservedInSelectedBoxes = needsToBeReservedInSelectedBoxes;
     }
 }

@@ -13,7 +13,9 @@ if (document.getElementById("setPriceButtonID")) {
 if (document.getElementById("myFrame")) {
     document.getElementById("myFrame").addEventListener("load", function () {
         if ($("#myFrame").attr("src") == "setPrice.html") {
-            functions.loadItemsDropdown("setPrice");
+            // functions.loadItemsDropdown("setPrice");
+        } else if ($("#myFrame").attr("src") == "incomingParts.html") {
+            functions.loadItemsDropdown("incomigParts");
         }
     });
 }
@@ -36,6 +38,14 @@ if (document.getElementById("listMissingPartsButtonID")) {
 
 if (document.getElementById("getDemandedPartsButtonID")) {
     document.getElementById("getDemandedPartsButtonID").addEventListener("click", storage_manager_scripts.getDemandedParts);
+}
+
+if (document.getElementById("incomingPartButtonID")) {
+    document.getElementById("incomingPartButtonID").addEventListener("click", functions.incomingPart);
+}
+
+if (document.getElementById("incomingPartSendButtonID")) {
+    document.getElementById("incomingPartSendButtonID").addEventListener("click", storage_manager_scripts.incomingPartsScript);
 }
 
 //Contstructors' event listeners

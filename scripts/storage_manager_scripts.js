@@ -1,7 +1,10 @@
-import { Part } from "./data_model.js";
+import { Box, Part, SelectedBoxes } from "./data_model.js";
 import * as functions from "./functions.js";
 
 var http = new XMLHttpRequest();
+var boxesNeeded = 0;
+var selectedBoxes = new SelectedBoxes();
+var responeses = [200, 201, 400, 401, 403];
 
 export function addNewPartScript() {
     var part = new Part();
@@ -223,4 +226,188 @@ export function getDemandedParts() {
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
+}
+
+export function incomingPartsScript() {
+    let part = new Part();
+    part.partID = parseInt($("#partSelectForIncoming :selected").attr("id"));
+    part.pcs = parseInt($("#numberOfPartID").val());
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            $("#numberOfPartID").val("");
+            functions.errorAlert("Siker!", "Alkatrész sikeresen hozzáadva.");
+        }
+
+        //Handles other response
+        else if (this.readyState == 4 && this.status == 202) {
+            $("#partSelectSectionID").attr("hidden", "hidden");
+            $("#storageSectionID").removeAttr("hidden");
+            setBox(this.response);
+        }
+
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles timeout
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
+        }
+    };
+
+    http.open("PATCH", "http://localhost:3000/incomingParts");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(part));
+}
+
+export function clickTable(event) {
+    let cell = event.target.closest("td");
+    if (!cell) return;
+    if (boxesNeeded == 0) return;
+    if (cell.classList.value == "p-3 table-light") {
+        boxesNeeded--;
+        document.getElementById("boxesNeededID").innerHTML = boxesNeeded;
+        cell.classList.remove("table-light");
+        cell.classList.add("table-warning");
+        var box = new Box();
+        switch (cell.parentElement.parentElement.parentElement.id) {
+            case "storageFirstRowID":
+                box.row = 1;
+                break;
+            case "storageSecondRowID":
+                box.row = 2;
+                break;
+            case "storageThirdRowID":
+                box.row = 3;
+                break;
+        }
+        box.column = cell.cellIndex + 1;
+        box.level = 5 - cell.parentElement.rowIndex;
+        selectedBoxes.boxes = new Array();
+        selectedBoxes.boxes.push(box);
+    }
+    if (boxesNeeded == 0) {
+        sendBox(selectedBoxes);
+    }
+}
+
+export function setBox(response) {
+    response = JSON.parse(response);
+    selectedBoxes.partID = response.partID;
+    selectedBoxes.pcs = response.remainingPcs;
+    selectedBoxes.needsToBeReservedInSelectedBoxes = response.needsToBeReservedInSelectedBoxes;
+    boxesNeeded = response.boxesNeeded;
+    document.getElementById("boxesNeededID").innerHTML = boxesNeeded;
+    let boxArray = [];
+    response.emptyBoxes.forEach((element) => {
+        var box = new Box();
+        box.row = element.row;
+        box.column = element.column;
+        box.level = element.level;
+        box.partID = element.partID;
+        boxArray.push(box);
+    });
+
+    var table1 = document.getElementById("storageFirstRowID");
+    var table2 = document.getElementById("storageSecondRowID");
+    var table3 = document.getElementById("storageThirdRowID");
+
+    table1.addEventListener("click", function (event) {
+        clickTable(event);
+    });
+    table2.addEventListener("click", function (event) {
+        clickTable(event);
+    });
+    table3.addEventListener("click", function (event) {
+        clickTable(event);
+    });
+
+    boxArray.forEach((box) => {
+        if (box.partID != null) {
+            switch (box.row) {
+                case 1:
+                    table1.rows[5 - box.level].cells[box.column - 1].classList.add("table-success");
+                    break;
+                case 2:
+                    table2.rows[5 - box.level].cells[box.column - 1].classList.add("table-success");
+                    break;
+                case 3:
+                    table3.rows[5 - box.level].cells[box.column - 1].classList.add("table-success");
+                    break;
+                default:
+                    break;
+            }
+        } else if (box.partID == null) {
+            switch (box.row) {
+                case 1:
+                    table1.rows[5 - box.level].cells[box.column - 1].classList.add("table-light");
+                    break;
+                case 2:
+                    table2.rows[5 - box.level].cells[box.column - 1].classList.add("table-light");
+                    break;
+                case 3:
+                    table3.rows[5 - box.level].cells[box.column - 1].classList.add("table-light");
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+
+    for (var i = 0; i < 5; i++) {
+        for (var j = 0; j < 4; j++) {
+            if (table1.rows[i].cells[j].classList.length != 2) {
+                table1.rows[i].cells[j].classList.add("table-danger");
+            }
+            if (table2.rows[i].cells[j].classList.length != 2) {
+                table2.rows[i].cells[j].classList.add("table-danger");
+            }
+            if (table3.rows[i].cells[j].classList.length != 2) {
+                table3.rows[i].cells[j].classList.add("table-danger");
+            }
+        }
+    }
+}
+
+export function sendBox(obj) {
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            window.parent.document.getElementById("incomingPartButtonID").click();
+            functions.errorAlert("Siker!", "Alkatrész sikeresen felvéve.");
+        }
+        //Handles permission
+        else if (this.readyState == 4 && this.status == 403) {
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
+        }
+        //Handles timeout
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
+        }
+    };
+
+    http.open("PUT", "http://localhost:3000/incomingParts");
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send(JSON.stringify(obj));
 }
