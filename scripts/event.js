@@ -13,7 +13,7 @@ if (document.getElementById("setPriceButtonID")) {
 if (document.getElementById("myFrame")) {
     document.getElementById("myFrame").addEventListener("load", function () {
         if ($("#myFrame").attr("src") == "setPrice.html") {
-            // functions.loadItemsDropdown("setPrice");
+            functions.loadItemsDropdown("setPrice");
         } else if ($("#myFrame").attr("src") == "incomingParts.html") {
             functions.loadItemsDropdown("incomigParts");
         }

@@ -296,7 +296,6 @@ export function clickTable(event) {
         }
         box.column = cell.cellIndex + 1;
         box.level = 5 - cell.parentElement.rowIndex;
-        selectedBoxes.boxes = new Array();
         selectedBoxes.boxes.push(box);
     }
     if (boxesNeeded == 0) {

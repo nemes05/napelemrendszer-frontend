@@ -87,7 +87,7 @@ export class SelectedBoxes {
     partID = null;
     pcs = null;
     needsToBeReservedInSelectedBoxes = null;
-    boxes = null;
+    boxes = new Array();
 
     constructor(partID, pcs, needsToBeReservedInSelectedBoxes) {
         this.partID = partID;
