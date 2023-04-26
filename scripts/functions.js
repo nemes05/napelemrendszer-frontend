@@ -116,6 +116,12 @@ export function draft() {
     $("#constructorIFrame").attr("hidden", "hidden");
 }
 
+export function listProjectParts() {
+    $("#constructorIFrame").attr("src", "listProjectParts.html");
+    $("#showTableID").attr("hidden", "hidden");
+    $("#constructorIFrame").attr("hidden", "hidden");
+}
+
 //Load the projects for set working time and labor fee
 export function loadProjectsDropDown(caller) {
     http.onreadystatechange = function () {
@@ -135,6 +141,8 @@ export function loadProjectsDropDown(caller) {
                 case "closeProject":
                     select = $("#constructorIFrame").contents().find("#closeProjectProjectSelectID")[0];
                     break;
+                case "listProjectParts":
+                    select = $("#constructorIFrame").contents().find("#projectSelectForList")[0];
             }
             //Creates the list
             if (caller == "draft") {
@@ -150,6 +158,26 @@ export function loadProjectsDropDown(caller) {
             } else if (caller == "priceCalculation") {
                 $.each(response, function () {
                     if (this.stateName == "Draft") {
+                        var opt = document.createElement("option");
+                        opt.value = this.projectID;
+                        opt.id = this.projectID;
+                        opt.text = this.address;
+                        select.appendChild(opt);
+                    }
+                });
+            } else if (caller == "workingTimeAndLaborFee") {
+                $.each(response, function () {
+                    if (this.stateName != "Completed" && this.stateName != "Failed") {
+                        var opt = document.createElement("option");
+                        opt.value = this.projectID;
+                        opt.id = this.projectID;
+                        opt.text = this.address;
+                        select.appendChild(opt);
+                    }
+                });
+            } else if (caller == "listProjectParts") {
+                $.each(response, function () {
+                    if (this.stateName != "Completed" && this.stateName != "Failed") {
                         var opt = document.createElement("option");
                         opt.value = this.projectID;
                         opt.id = this.projectID;

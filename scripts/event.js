@@ -13,7 +13,7 @@ if (document.getElementById("setPriceButtonID")) {
 if (document.getElementById("myFrame")) {
     document.getElementById("myFrame").addEventListener("load", function () {
         if ($("#myFrame").attr("src") == "setPrice.html") {
-            // functions.loadItemsDropdown("setPrice");
+            functions.loadItemsDropdown("setPrice");
         } else if ($("#myFrame").attr("src") == "incomingParts.html") {
             functions.loadItemsDropdown("incomigParts");
         }
@@ -69,6 +69,10 @@ if (document.getElementById("addWorkingTimeButtonID")) {
     document.getElementById("addWorkingTimeButtonID").addEventListener("click", functions.addWorkingTime);
 }
 
+if (document.getElementById("listProjectPartsButtonID")) {
+    document.getElementById("listProjectPartsButtonID").addEventListener("click", functions.listProjectParts);
+}
+
 if (document.getElementById("constructorIFrame")) {
     document.getElementById("constructorIFrame").addEventListener("load", function () {
         if ($("#constructorIFrame").attr("src") == "workingTimeAndLaborFee.html") {
@@ -79,8 +83,13 @@ if (document.getElementById("constructorIFrame")) {
             functions.loadProjectsDropDown("priceCalculation");
         } else if ($("#constructorIFrame").attr("src") == "closeProject.html") {
             functions.loadProjectsDropDown("closeProject");
+        } else if ($("#constructorIFrame").attr("src") == "listProjectParts.html") {
+            functions.loadProjectsDropDown("listProjectParts");
         }
     });
+}
+if (document.getElementById("listProjectPartsButtonSend")) {
+    document.getElementById("listProjectPartsButtonSend").addEventListener("click", constructor_scripts.listProjectPartsScript);
 }
 
 if (document.getElementById("addworkingTimeID")) {
