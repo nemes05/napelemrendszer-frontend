@@ -123,6 +123,8 @@ export function listProject() {
                 $("#constructorIFrame").attr("hidden", "hidden");
                 $("#showTableID").removeAttr("hidden");
             } else {
+                $("#constructorIFrame").attr("hidden", "hidden");
+                $("#showTableID").attr("hidden", "hidden");
                 functions.errorAlert("Figyelmeztetés", "Jelenleg nincs egyetlen projekt sem!");
             }
         }
@@ -206,6 +208,8 @@ export function listParts() {
                 $("#constructorIFrame").attr("hidden", "hidden");
                 $("#showTableID").removeAttr("hidden");
             } else {
+                $("#constructorIFrame").attr("hidden", "hidden");
+                $("#showTableID").attr("hidden", "hidden");
                 functions.errorAlert("Figyelmeztetés", "Jelenleg nincs alkatrész a raktárban!");
             }
         }
@@ -389,7 +393,7 @@ export function closeProjectScript() {
         }
     };
 
-    http.open("PATCH", "http://localhost:3000/closeProject/" + project.projectID + "/" + project.stateID);
+    http.open("PATCH", "http://localhost:3000/endProject/" + project.projectID + "/" + project.stateName);
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();
@@ -401,7 +405,7 @@ export function listProjectPartsScript() {
             let response = JSON.parse(this.response);
             if (response.length != 0) {
                 var partArray = [];
-                var headTitles = ["Alkatrész neve", "Szükséges", "Elérhető darabszám", "Hiányzó darabszám"];
+                var headTitles = ["Alkatrész neve", "Szükséges darabszám", "Elérhető darabszám", "Hiányzó darabszám"];
                 var tr = document.createElement("tr");
                 var thead = document.createElement("thead");
                 var tbody = document.createElement("tbody");
