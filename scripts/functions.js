@@ -116,6 +116,12 @@ export function draft() {
     $("#constructorIFrame").attr("hidden", "hidden");
 }
 
+export function listProjectParts() {
+    $("#constructorIFrame").attr("src", "listProjectParts.html");
+    $("#showTableID").attr("hidden", "hidden");
+    $("#constructorIFrame").attr("hidden", "hidden");
+}
+
 //Load the projects for set working time and labor fee
 export function loadProjectsDropDown(caller) {
     http.onreadystatechange = function () {
@@ -135,6 +141,8 @@ export function loadProjectsDropDown(caller) {
                 case "closeProject":
                     select = $("#constructorIFrame").contents().find("#closeProjectProjectSelectID")[0];
                     break;
+                case "listProjectParts":
+                    select = $("#constructorIFrame").contents().find("#projectSelectForList")[0];
             }
             //Creates the list
             if (caller == "draft") {

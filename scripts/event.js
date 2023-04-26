@@ -69,6 +69,10 @@ if (document.getElementById("addWorkingTimeButtonID")) {
     document.getElementById("addWorkingTimeButtonID").addEventListener("click", functions.addWorkingTime);
 }
 
+if (document.getElementById("listProjectPartsButtonID")) {
+    document.getElementById("listProjectPartsButtonID").addEventListener("click", functions.listProjectParts);
+}
+
 if (document.getElementById("constructorIFrame")) {
     document.getElementById("constructorIFrame").addEventListener("load", function () {
         if ($("#constructorIFrame").attr("src") == "workingTimeAndLaborFee.html") {
@@ -79,6 +83,8 @@ if (document.getElementById("constructorIFrame")) {
             functions.loadProjectsDropDown("priceCalculation");
         } else if ($("#constructorIFrame").attr("src") == "closeProject.html") {
             functions.loadProjectsDropDown("closeProject");
+        } else if ($("#constructorIFrame").attr("src") == "listProjectParts.html") {
+            functions.loadProjectsDropDown("listProjectParts");
         }
     });
 }
