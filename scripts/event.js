@@ -88,6 +88,9 @@ if (document.getElementById("constructorIFrame")) {
         }
     });
 }
+if (document.getElementById("listProjectPartsButtonSend")) {
+    document.getElementById("listProjectPartsButtonSend").addEventListener("click", constructor_scripts.listProjectPartsScript);
+}
 
 if (document.getElementById("addworkingTimeID")) {
     document.getElementById("addworkingTimeID").addEventListener("click", constructor_scripts.addWorkingTimeAndLaborFee);

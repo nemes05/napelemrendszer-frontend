@@ -87,45 +87,51 @@ export function listMissingParts() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let response = JSON.parse(this.response);
-            let headTitles = ["Alkatrész neve", "Ár"];
-            let thead = document.createElement("thead");
-            let tbody = document.createElement("tbody");
-            let table = document.createElement("table");
-            tbody.classList.add("table-group-divider");
-            table.classList.add("table", "table-striped");
+            if (response.length != 0) {
+                let headTitles = ["Alkatrész neve", "Ár"];
+                let thead = document.createElement("thead");
+                let tbody = document.createElement("tbody");
+                let table = document.createElement("table");
+                tbody.classList.add("table-group-divider");
+                table.classList.add("table", "table-striped");
 
-            headTitles.forEach((title) => {
-                let th = document.createElement("th");
-                th.innerHTML = title;
-                thead.appendChild(th);
-            });
-
-            response.forEach((element) => {
-                let part = new Part();
-                part.partID = element.partID;
-                part.partName = element.partName;
-                part.price = element.price;
-                parts.push(part);
-            });
-
-            parts.forEach((element) => {
-                let tr = document.createElement("tr");
-                tr.id = element.partID;
-                Object.values(element).forEach((details, index) => {
-                    if (details != undefined && index != 0) {
-                        let td = document.createElement("td");
-                        td.innerHTML = details;
-                        tr.appendChild(td);
-                    }
+                headTitles.forEach((title) => {
+                    let th = document.createElement("th");
+                    th.innerHTML = title;
+                    thead.appendChild(th);
                 });
-                tbody.appendChild(tr);
-            });
 
-            table.appendChild(thead);
-            table.appendChild(tbody);
-            $("#storageTableID").html(table);
-            $("#myFrame").attr("hidden", "hidden");
-            $("#storageTableID").removeAttr("hidden");
+                response.forEach((element) => {
+                    let part = new Part();
+                    part.partID = element.partID;
+                    part.partName = element.partName;
+                    part.price = element.price;
+                    parts.push(part);
+                });
+
+                parts.forEach((element) => {
+                    let tr = document.createElement("tr");
+                    tr.id = element.partID;
+                    Object.values(element).forEach((details, index) => {
+                        if (details != undefined && index != 0) {
+                            let td = document.createElement("td");
+                            td.innerHTML = details;
+                            tr.appendChild(td);
+                        }
+                    });
+                    tbody.appendChild(tr);
+                });
+
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                $("#storageTableID").html(table);
+                $("#myFrame").attr("hidden", "hidden");
+                $("#storageTableID").removeAttr("hidden");
+            } else {
+                $("#myFrame").attr("hidden", "hidden");
+                $("#storageTableID").attr("hidden", "hidden");
+                functions.errorAlert("Figyelmeztetés", "Jelenleg minden alkatrész van raktáron!");
+            }
         }
 
         //Handles permission
@@ -158,47 +164,53 @@ export function listMissingParts() {
 export function getDemandedParts() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            let parts = [];
             let response = JSON.parse(this.response);
-            let headTitles = ["Alkatrész neve", "Hiányzó darabszám"];
-            let thead = document.createElement("thead");
-            let tbody = document.createElement("tbody");
-            let table = document.createElement("table");
-            tbody.classList.add("table-group-divider");
-            table.classList.add("table", "table-striped");
+            if (response.length != 0) {
+                let parts = [];
+                let headTitles = ["Alkatrész neve", "Hiányzó darabszám"];
+                let thead = document.createElement("thead");
+                let tbody = document.createElement("tbody");
+                let table = document.createElement("table");
+                tbody.classList.add("table-group-divider");
+                table.classList.add("table", "table-striped");
 
-            headTitles.forEach((title) => {
-                let th = document.createElement("th");
-                th.innerHTML = title;
-                thead.appendChild(th);
-            });
-
-            response.forEach((element) => {
-                let part = new Part();
-                part.partID = element.partID;
-                part.partName = element.partName;
-                part.missingQuantity = element.missingQuantity;
-                parts.push(part);
-            });
-
-            parts.forEach((element) => {
-                let tr = document.createElement("tr");
-                tr.id = element.partID;
-                Object.values(element).forEach((details, index) => {
-                    if (details != undefined && index != 0) {
-                        let td = document.createElement("td");
-                        td.innerHTML = details;
-                        tr.appendChild(td);
-                    }
+                headTitles.forEach((title) => {
+                    let th = document.createElement("th");
+                    th.innerHTML = title;
+                    thead.appendChild(th);
                 });
-                tbody.appendChild(tr);
-            });
 
-            table.appendChild(thead);
-            table.appendChild(tbody);
-            $("#storageTableID").html(table);
-            $("#myFrame").attr("hidden", "hidden");
-            $("#storageTableID").removeAttr("hidden");
+                response.forEach((element) => {
+                    let part = new Part();
+                    part.partID = element.partID;
+                    part.partName = element.partName;
+                    part.missingQuantity = element.missingQuantity;
+                    parts.push(part);
+                });
+
+                parts.forEach((element) => {
+                    let tr = document.createElement("tr");
+                    tr.id = element.partID;
+                    Object.values(element).forEach((details, index) => {
+                        if (details != undefined && index != 0) {
+                            let td = document.createElement("td");
+                            td.innerHTML = details;
+                            tr.appendChild(td);
+                        }
+                    });
+                    tbody.appendChild(tr);
+                });
+
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                $("#storageTableID").html(table);
+                $("#myFrame").attr("hidden", "hidden");
+                $("#storageTableID").removeAttr("hidden");
+            } else {
+                $("#myFrame").attr("hidden", "hidden");
+                $("#storageTableID").attr("hidden", "hidden");
+                functions.errorAlert("Figyelmeztetés", "Jelenleg nincs hiányzó és foglalt alkatrész!");
+            }
         }
 
         //Handles permission

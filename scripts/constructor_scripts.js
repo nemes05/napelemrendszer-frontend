@@ -1,5 +1,5 @@
 "use strict";
-import { Part, Project, Customer, Draft } from "./data_model.js";
+import { Part, Project, Customer, Draft, ProjectPart } from "./data_model.js";
 import * as functions from "./functions.js";
 
 var http = new XMLHttpRequest();
@@ -55,72 +55,76 @@ export function addNewProject() {
 export function listProject() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            var projectArray = [];
-            var customerArray = [];
-            var headTitles = ["Helyszín", "Leírás", "Megrendelési idő", "Munkaidő", "Munkadíj", "Anyagköltség", "Fizetendő", "Állapot", "Megrendelő", "Telefonszám"];
-            var table = document.createElement("table");
-            var thead = document.createElement("thead");
-            var tbody = document.createElement("tbody");
-            var tr = document.createElement("tr");
-            tbody.classList.add("table-group-divider");
-            table.classList.add("table", "table-striped");
             let response = JSON.parse(this.response);
-
-            $.each(response, function () {
-                var project = new Project();
-                var customer = new Customer();
-
-                if (this.materialCost == 0) {
-                    project.price = 0;
-                } else {
-                    project.price = this.price;
-                }
-                project.project_address = this.address;
-                project.description = this.description;
-                project.orderDate = new Date(this.orderDate).toLocaleDateString();
-                project.workingTime = this.workingTime;
-                project.laborFee = this.laborFee;
-                project.materialCost = this.materialCost;
-                project.stateName = this.stateName;
-
-                customer.name = this.name;
-                customer.phone = this.phone;
-
-                projectArray.push(project);
-                customerArray.push(customer);
-            });
-
-            headTitles.forEach((title) => {
-                var th = document.createElement("th");
-                th.innerHTML = title;
-                tr.appendChild(th);
-            });
-
-            thead.appendChild(tr);
-            table.appendChild(thead);
-
-            for (var i = 0; i < projectArray.length; i++) {
+            if (response.length != 0) {
+                var projectArray = [];
+                var customerArray = [];
+                var headTitles = ["Helyszín", "Leírás", "Megrendelési idő", "Munkaidő", "Munkadíj", "Anyagköltség", "Fizetendő", "Állapot", "Megrendelő", "Telefonszám"];
+                var table = document.createElement("table");
+                var thead = document.createElement("thead");
+                var tbody = document.createElement("tbody");
                 var tr = document.createElement("tr");
-                $.each(projectArray[i], function () {
-                    if (this != undefined) {
-                        var td = document.createElement("td");
-                        td.innerHTML = this;
-                        tr.appendChild(td);
+                tbody.classList.add("table-group-divider");
+                table.classList.add("table", "table-striped");
+
+                $.each(response, function () {
+                    var project = new Project();
+                    var customer = new Customer();
+
+                    if (this.materialCost == 0) {
+                        project.price = 0;
+                    } else {
+                        project.price = this.price;
                     }
+                    project.project_address = this.address;
+                    project.description = this.description;
+                    project.orderDate = new Date(this.orderDate).toLocaleDateString();
+                    project.workingTime = this.workingTime;
+                    project.laborFee = this.laborFee;
+                    project.materialCost = this.materialCost;
+                    project.stateName = this.stateName;
+
+                    customer.name = this.name;
+                    customer.phone = this.phone;
+
+                    projectArray.push(project);
+                    customerArray.push(customer);
                 });
-                $.each(customerArray[i], function () {
-                    if (this != undefined) {
-                        var td = document.createElement("td");
-                        td.innerHTML = this;
-                        tr.appendChild(td);
-                    }
+
+                headTitles.forEach((title) => {
+                    var th = document.createElement("th");
+                    th.innerHTML = title;
+                    tr.appendChild(th);
                 });
-                tbody.appendChild(tr);
+
+                thead.appendChild(tr);
+                table.appendChild(thead);
+
+                for (var i = 0; i < projectArray.length; i++) {
+                    var tr = document.createElement("tr");
+                    $.each(projectArray[i], function () {
+                        if (this != undefined) {
+                            var td = document.createElement("td");
+                            td.innerHTML = this;
+                            tr.appendChild(td);
+                        }
+                    });
+                    $.each(customerArray[i], function () {
+                        if (this != undefined) {
+                            var td = document.createElement("td");
+                            td.innerHTML = this;
+                            tr.appendChild(td);
+                        }
+                    });
+                    tbody.appendChild(tr);
+                }
+                table.appendChild(tbody);
+                $("#showTableID").html(table);
+                $("#constructorIFrame").attr("hidden", "hidden");
+                $("#showTableID").removeAttr("hidden");
+            } else {
+                functions.errorAlert("Figyelmeztetés", "Jelenleg nincs egyetlen projekt sem!");
             }
-            table.appendChild(tbody);
-            $("#showTableID").html(table);
-            $("#constructorIFrame").attr("hidden", "hidden");
-            $("#showTableID").removeAttr("hidden");
         }
 
         //Handles database error
@@ -153,53 +157,57 @@ export function listProject() {
 export function listParts() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            var partArray = [];
-            var headTitles = ["Alkatrész neve", "Ár", "Elérhető darabszám"];
-            var tr = document.createElement("tr");
-            var thead = document.createElement("thead");
-            var tbody = document.createElement("tbody");
-            var table = document.createElement("table");
-            tbody.classList.add("table-group-divider");
-            table.classList.add("table", "table-striped");
             let response = JSON.parse(this.response);
-
-            //Initialize parts
-            $.each(response, function () {
-                var mypart = new Part();
-                mypart.partName = this.partName;
-                mypart.price = this.price;
-                mypart.availablePieces = this.availablePieces;
-                partArray.push(mypart);
-            });
-
-            //Creates the headers
-            headTitles.forEach((title) => {
-                var th = document.createElement("th");
-                th.innerHTML = title;
-                tr.appendChild(th);
-            });
-
-            thead.appendChild(tr);
-            table.appendChild(thead);
-
-            //Creates the rows including parts
-            for (var i = 0; i < partArray.length; i++) {
+            if (response.length != 0) {
+                var partArray = [];
+                var headTitles = ["Alkatrész neve", "Ár", "Elérhető darabszám"];
                 var tr = document.createElement("tr");
-                $.each(partArray[i], function () {
-                    if (this != undefined) {
-                        var td = document.createElement("td");
-                        td.innerHTML = this;
-                        tr.appendChild(td);
-                    }
-                });
-                tbody.appendChild(tr);
-                table.appendChild(tbody);
-            }
+                var thead = document.createElement("thead");
+                var tbody = document.createElement("tbody");
+                var table = document.createElement("table");
+                tbody.classList.add("table-group-divider");
+                table.classList.add("table", "table-striped");
 
-            //Shows table
-            $("#showTableID").html(table);
-            $("#constructorIFrame").attr("hidden", "hidden");
-            $("#showTableID").removeAttr("hidden");
+                //Initialize parts
+                $.each(response, function () {
+                    var mypart = new Part();
+                    mypart.partName = this.partName;
+                    mypart.price = this.price;
+                    mypart.availablePieces = this.availablePieces;
+                    partArray.push(mypart);
+                });
+
+                //Creates the headers
+                headTitles.forEach((title) => {
+                    var th = document.createElement("th");
+                    th.innerHTML = title;
+                    tr.appendChild(th);
+                });
+
+                thead.appendChild(tr);
+                table.appendChild(thead);
+
+                //Creates the rows including parts
+                for (var i = 0; i < partArray.length; i++) {
+                    var tr = document.createElement("tr");
+                    $.each(partArray[i], function () {
+                        if (this != undefined) {
+                            var td = document.createElement("td");
+                            td.innerHTML = this;
+                            tr.appendChild(td);
+                        }
+                    });
+                    tbody.appendChild(tr);
+                    table.appendChild(tbody);
+                }
+
+                //Shows table
+                $("#showTableID").html(table);
+                $("#constructorIFrame").attr("hidden", "hidden");
+                $("#showTableID").removeAttr("hidden");
+            } else {
+                functions.errorAlert("Figyelmeztetés", "Jelenleg nincs alkatrész a raktárban!");
+            }
         }
 
         //Handles database error
@@ -382,6 +390,88 @@ export function closeProjectScript() {
     };
 
     http.open("PATCH", "http://localhost:3000/closeProject/" + project.projectID + "/" + project.stateID);
+    http.setRequestHeader("Content-Type", "application/json");
+    http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
+    http.send();
+}
+export function listProjectPartsScript() {
+    var projectID = $("#projectSelectForList").val();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let response = JSON.parse(this.response);
+            if (response.length != 0) {
+                var partArray = [];
+                var headTitles = ["Alkatrész neve", "Szükséges", "Elérhető darabszám", "Hiányzó darabszám"];
+                var tr = document.createElement("tr");
+                var thead = document.createElement("thead");
+                var tbody = document.createElement("tbody");
+                var table = document.createElement("table");
+                tbody.classList.add("table-group-divider");
+                table.classList.add("table", "table-striped");
+
+                //Initialize parts
+                $.each(response, function () {
+                    var mypart = new ProjectPart();
+                    mypart.partName = this.partName;
+                    mypart.assignedQuantity = this.assignedQuantity;
+                    mypart.reguiredQuantity = this.reguiredQuantity;
+                    mypart.missingQuantity = this.reguiredQuantity - this.assignedQuantity;
+                    partArray.push(mypart);
+                });
+
+                //Creates the headers
+                headTitles.forEach((title) => {
+                    var th = document.createElement("th");
+                    th.innerHTML = title;
+                    tr.appendChild(th);
+                });
+
+                thead.appendChild(tr);
+                table.appendChild(thead);
+
+                //Creates the rows including parts
+                for (var i = 0; i < partArray.length; i++) {
+                    var tr = document.createElement("tr");
+                    $.each(partArray[i], function () {
+                        if (this != undefined) {
+                            var td = document.createElement("td");
+                            td.innerHTML = this;
+                            tr.appendChild(td);
+                        }
+                    });
+                    tbody.appendChild(tr);
+                    table.appendChild(tbody);
+                }
+
+                //Shows table
+                $("#listProjectPartsTableID").html(table);
+                $("#listProjectPartsTableID").removeAttr("hidden");
+            } else {
+                $("#listProjectPartsTableID").attr("hidden", "hidden");
+                functions.errorAlert("Figyelmeztetés", "A kiválasztott projekthez nincs egyetlen alkatrész sem!");
+            }
+        }
+        //Handles database error
+        else if (this.readyState == 4 && this.status == 400) {
+            functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
+        }
+
+        //Handles expired token error
+        else if (this.readyState == 4 && this.status == 401) {
+            functions.timeOut();
+        }
+
+        //Handles permission error
+        else if (this.readyState == 4 && this.status == 403) {
+            functions.errorAlert("Error", "Nincs jogosultsága ehhez a művelethez!");
+        }
+
+        //Handles general error
+        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+            functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
+        }
+    };
+    http.open("GET", "http://localhost:3000/getPartsForProject/" + projectID);
     http.setRequestHeader("Content-Type", "application/json");
     http.setRequestHeader("Authorization", document.cookie.split("=")[1]);
     http.send();

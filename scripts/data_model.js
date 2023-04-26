@@ -95,3 +95,15 @@ export class SelectedBoxes {
         this.needsToBeReservedInSelectedBoxes = needsToBeReservedInSelectedBoxes;
     }
 }
+export class ProjectPart {
+    partName = null;
+    reguiredQuantity = null;
+    assignedQuantity = null;
+    missingQuantity = null;
+    constructor(partName, reguiredQuantity, assignedQuantity, missingQuantity) {
+        this.partName = partName;
+        this.reguiredQuantity = reguiredQuantity;
+        this.assignedQuantity = assignedQuantity;
+        this.missingQuantity = missingQuantity;
+    }
+}
