@@ -185,6 +185,16 @@ export function loadProjectsDropDown(caller) {
                         select.appendChild(opt);
                     }
                 });
+            } else if (caller == "closeProject") {
+                $.each(response, function () {
+                    if (this.stateName != "Completed" && this.stateName != "Failed") {
+                        var opt = document.createElement("option");
+                        opt.value = this.projectID;
+                        opt.id = this.projectID;
+                        opt.text = this.address;
+                        select.appendChild(opt);
+                    }
+                });
             } else {
                 $.each(response, function () {
                     var opt = document.createElement("option");
