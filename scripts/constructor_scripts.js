@@ -292,6 +292,7 @@ export function draft() {
             $.each($(".setPrice input"), function () {
                 $(this).val("");
             });
+            $("#piecesID").val("");
         }
 
         //Handles database error
@@ -405,7 +406,7 @@ export function listProjectPartsScript() {
             let response = JSON.parse(this.response);
             if (response.length != 0) {
                 var partArray = [];
-                var headTitles = ["Alkatrész neve", "Szükséges darabszám", "Elérhető darabszám", "Hiányzó darabszám"];
+                var headTitles = ["Alkatrész neve", "Szükséges darabszám", "Foglalt darabszám", "Hiányzó darabszám"];
                 var tr = document.createElement("tr");
                 var thead = document.createElement("thead");
                 var tbody = document.createElement("tbody");
