@@ -74,6 +74,8 @@ export class Box {
     column = null;
     level = null;
     partID = null;
+    name = null;
+    quantity = null;
 
     constructor(row, column, level, partID) {
         this.row = row;
