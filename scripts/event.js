@@ -1,6 +1,7 @@
 import * as functions from "./functions.js";
 import * as storage_manager_scripts from "./storage_manager_scripts.js";
 import * as constructor_scripts from "./constructor_scripts.js";
+import * as store_keeper_scripts from "./store_keeper_scripts.js";
 
 if (document.getElementById("addNewPartButtonID")) {
     document.getElementById("addNewPartButtonID").addEventListener("click", functions.addNewPart);
@@ -88,6 +89,7 @@ if (document.getElementById("constructorIFrame")) {
         }
     });
 }
+
 if (document.getElementById("listProjectPartsButtonSend")) {
     document.getElementById("listProjectPartsButtonSend").addEventListener("click", constructor_scripts.listProjectPartsScript);
 }
@@ -130,4 +132,19 @@ if (document.getElementById("alertCloseID")) {
     document.getElementById("alertCloseID").addEventListener("click", function () {
         document.getElementById("alertDivID").setAttribute("hidden", "hidden");
     });
+}
+
+if (document.getElementById("getPartsFromStorageButtonID")) {
+    document.getElementById("getPartsFromStorageButtonID").addEventListener("click", functions.getParts);
+}
+
+if (document.getElementById("storeKeeperFrame")) {
+    document.getElementById("storeKeeperFrame").addEventListener("load", function () {
+        if ($("#storeKeeperFrame").attr("src") == "getParts.html") {
+            functions.loadProjectsDropDown("getParts");
+        }
+    });
+}
+if (document.getElementById("getPartsButtonID")) {
+    document.getElementById("getPartsButtonID").addEventListener("click", store_keeper_scripts.getPartsScript);
 }
