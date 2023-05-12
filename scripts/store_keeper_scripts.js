@@ -1,30 +1,6 @@
 import { Box } from "./data_model.js";
 var http = new XMLHttpRequest();
 
-[
-    {
-        row: 2,
-        column: 1,
-        level: 1,
-        name: "Fronius Inverter",
-        quantity: 1,
-    },
-    {
-        row: 2,
-        column: 2,
-        level: 1,
-        name: "Tartókonzol",
-        quantity: 3,
-    },
-    {
-        row: 3,
-        column: 1,
-        level: 2,
-        name: "Tartókonzol",
-        quantity: 8,
-    },
-];
-
 export function getPartsScript() {
     http.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
