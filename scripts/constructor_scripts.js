@@ -366,13 +366,20 @@ export function closeProjectScript() {
     project.stateName = $("#closeProjectStateSelectID :selected").attr("name");
 
     http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 201) {
+        if (this.readyState == 4 && this.status == 200) {
             if (project.stateName == "Failed") {
                 functions.errorAlert("Siker!", "<div>A projekt lezárult <span class='text-danger'>Failed</span> státusszal.</div>");
             } else {
                 functions.errorAlert("Siker!", "<div>A projekt lezárult <span class='text-success'>Completed</span> státusszal.</div>");
             }
+            window.parent.document.getElementById("closeProjectButtonID").click();
         }
+
+        //Handles invalid request
+        else if (this.readyState == 4 && this.status == 405) {
+            functions.errorAlert("Error", "Csak In Progress státuszból lehet befejezettre rakni a projektet!");
+        }
+
         //Handles database error
         else if (this.readyState == 4 && this.status == 400) {
             functions.errorAlert("Error", "Nem tudtunk csatlakozni az adatbázishoz!");
@@ -389,7 +396,7 @@ export function closeProjectScript() {
         }
 
         //Handles general error
-        else if (this.readyState == 4 && !responeses.includes(this.status)) {
+        else if (this.readyState == 4 && !responeses.includes(this.status) && this.status != 405) {
             functions.errorAlert("Error", "Valami hiba történt, kérjük próbálja újra!");
         }
     };

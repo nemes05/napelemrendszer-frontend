@@ -143,6 +143,8 @@ export function loadProjectsDropDown(caller) {
                     break;
                 case "listProjectParts":
                     select = $("#constructorIFrame").contents().find("#projectSelectForList")[0];
+                case "getParts":
+                    select = $("#storeKeeperFrame").contents().find("#getPartsProjectSelectID")[0];
             }
             //Creates the list
             if (caller == "draft") {
@@ -176,6 +178,7 @@ export function loadProjectsDropDown(caller) {
                     }
                 });
             } else if (caller == "listProjectParts") {
+                select = $("#constructorIFrame").contents().find("#projectSelectForList")[0];
                 $.each(response, function () {
                     if (this.stateName != "Completed" && this.stateName != "Failed") {
                         var opt = document.createElement("option");
@@ -195,6 +198,16 @@ export function loadProjectsDropDown(caller) {
                         select.appendChild(opt);
                     }
                 });
+            } else if (caller == "getParts") {
+                $.each(response, function () {
+                    if (this.stateName == "Scheduled") {
+                        var opt = document.createElement("option");
+                        opt.value = this.projectID;
+                        opt.id = this.projectID;
+                        opt.text = this.address;
+                        select.appendChild(opt);
+                    }
+                });
             } else {
                 $.each(response, function () {
                     var opt = document.createElement("option");
@@ -207,8 +220,10 @@ export function loadProjectsDropDown(caller) {
             //Shows the iframe
             if (select.children.length == 0) {
                 errorAlert("Figyelem!", "Nincs projekt amire el lehet végezni a funkciót.");
-            } else {
+            } else if (caller != "getParts") {
                 $("#constructorIFrame").removeAttr("hidden");
+            } else {
+                $("#storeKeeperFrame").removeAttr("hidden");
             }
         }
 
@@ -247,6 +262,11 @@ export function closeProject() {
     $("#constructorIFrame").attr("src", "closeProject.html");
     $("#showTableID").attr("hidden", "hidden");
     $("#constructorIFrame").attr("hidden", "hidden");
+}
+
+export function getParts() {
+    $("#storeKeeperFrame").attr("src", "getParts.html");
+    $("#storeKeeperFrame").attr("hidden", "hidden");
 }
 
 export function timeOut() {
