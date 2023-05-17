@@ -41,15 +41,15 @@ export function getPartsScript() {
             boxList.forEach((element) => {
                 switch (element.row) {
                     case 1:
-                        storageFirstRow.rows[5 - element.level].cells[element.column - 1].classList.add("bg-success");
+                        storageFirstRow.rows[5 - element.level].cells[element.column - 1].classList.add("text-bg-success");
                         storageFirstRow.rows[5 - element.level].cells[element.column - 1].innerHTML = element.quantity;
                         break;
                     case 2:
-                        storageSecondRow.rows[5 - element.level].cells[element.column - 1].classList.add("bg-success");
+                        storageSecondRow.rows[5 - element.level].cells[element.column - 1].classList.add("text-bg-success");
                         storageSecondRow.rows[5 - element.level].cells[element.column - 1].innerHTML = element.quantity;
                         break;
                     case 3:
-                        storageThirdRow.rows[5 - element.level].cells[element.column - 1].classList.add("bg-success");
+                        storageThirdRow.rows[5 - element.level].cells[element.column - 1].classList.add("text-bg-success");
                         storageThirdRow.rows[5 - element.level].cells[element.column - 1].innerHTML = element.quantity;
                         break;
                 }
