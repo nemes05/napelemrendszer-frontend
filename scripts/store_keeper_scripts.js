@@ -13,12 +13,14 @@ export function getPartsScript() {
             let storageThirdRow = $("#storageThirdRowID")[0];
 
             res.forEach((element) => {
-                let box = new Box(element.row, element.column, element.level);
-                box.name = element.name;
-                box.quantity = element.quantity;
-                boxList.push(structuredClone(box));
-                if (tableBoxList.filter((box) => box.name == element.name && (box.quantity += element.quantity)).length == 0) {
-                    tableBoxList.push(box);
+                if (element.quantity != 0) {
+                    let box = new Box(element.row, element.column, element.level);
+                    box.name = element.name;
+                    box.quantity = element.quantity;
+                    boxList.push(structuredClone(box));
+                    if (tableBoxList.filter((box) => box.name == element.name && (box.quantity += element.quantity)).length == 0) {
+                        tableBoxList.push(box);
+                    }
                 }
             });
 
@@ -40,20 +42,21 @@ export function getPartsScript() {
                 switch (element.row) {
                     case 1:
                         storageFirstRow.rows[5 - element.level].cells[element.column - 1].classList.add("bg-success");
+                        storageFirstRow.rows[5 - element.level].cells[element.column - 1].innerHTML = element.quantity;
                         break;
                     case 2:
                         storageSecondRow.rows[5 - element.level].cells[element.column - 1].classList.add("bg-success");
+                        storageSecondRow.rows[5 - element.level].cells[element.column - 1].innerHTML = element.quantity;
                         break;
                     case 3:
                         storageThirdRow.rows[5 - element.level].cells[element.column - 1].classList.add("bg-success");
+                        storageThirdRow.rows[5 - element.level].cells[element.column - 1].innerHTML = element.quantity;
                         break;
                 }
             });
 
             $("#selectProjectSectionID").attr("hidden", "hidden");
             $("#storageDetailsSectionID").removeAttr("hidden");
-            console.log(boxList);
-            console.log(tableBoxList);
         }
     };
 

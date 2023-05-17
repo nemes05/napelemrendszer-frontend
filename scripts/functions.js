@@ -178,6 +178,17 @@ export function loadProjectsDropDown(caller) {
                     }
                 });
             } else if (caller == "listProjectParts") {
+                select = $("#constructorIFrame").contents().find("#projectSelectForList")[0];
+                $.each(response, function () {
+                    if (this.stateName != "Completed" && this.stateName != "Failed") {
+                        var opt = document.createElement("option");
+                        opt.value = this.projectID;
+                        opt.id = this.projectID;
+                        opt.text = this.address;
+                        select.appendChild(opt);
+                    }
+                });
+            } else if (caller == "closeProject") {
                 $.each(response, function () {
                     if (this.stateName != "Completed" && this.stateName != "Failed") {
                         var opt = document.createElement("option");
